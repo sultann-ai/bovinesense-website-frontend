@@ -13,6 +13,13 @@ createRoot(document.getElementById('root')!).render(
         duration: 1.8, // Animation duration in seconds
         smoothWheel: true, // Enable smooth scrolling with the mouse wheel
         // smoothTouch: true, // Enable smooth scrolling on touch devices
+        prevent: (node) => {
+          // Prevent Lenis from handling scroll events on modal elements
+          return !!(node.closest('[data-lenis-prevent]') || 
+                   node.closest('.modal-content') ||
+                   node.closest('[role="dialog"]') ||
+                   node.classList.contains('overflow-y-auto'));
+        }
       }}
     >
       <App />

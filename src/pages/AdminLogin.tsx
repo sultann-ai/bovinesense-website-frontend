@@ -1,39 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { FaLock } from 'react-icons/fa';
-import AdminDashboard from '../components/AdminDashboard';
-import { adminService } from '../services/adminService';
+import { useNavigate } from 'react-router-dom';
+import { useAdmin } from '../contexts/AdminContext';
+import toast from 'react-hot-toast';
 
-const Admin = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState('');
+const AdminLogin = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: ''
+  });
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const { login, isAuthenticated, isLoading: authLoading } = useAdmin();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log('AdminLogin: isAuthenticated:', isAuthenticated, 'authLoading:', authLoading);
+    if (isAuthenticated && !authLoading) {
+      console.log('AdminLogin: Navigating to dashboard');
+      navigate('/admin/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, authLoading, navigate]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (isLoading || authLoading || isAuthenticated) return; // Prevent multiple submissions
+    
     setIsLoading(true);
-    setError('');
 
     try {
-      await adminService.login(password);
-      setIsAuthenticated(true);
-    } catch (error) {
-      setError('Invalid password');
+      await login(formData.username, formData.password);
+      toast.success('Login successful!');
+      // Don't navigate here - let the useEffect handle it
+    } catch (error: any) {
+      console.error('Login error:', error);
+      toast.error(error.message || 'Login failed');
     } finally {
       setIsLoading(false);
     }
   };
 
-  if (isAuthenticated) {
-    return <AdminDashboard />;
-  }
-
   return (
     <>
       <Helmet>
-        <title>Admin Panel - ZyninLabs</title>
+        <title>Admin Login - ZyninLabs</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
@@ -50,14 +69,30 @@ const Admin = () => {
                 <FaLock className="text-white text-2xl" />
               </div>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Admin Panel
+                Admin Login
               </h1>
               <p className="text-gray-600 dark:text-gray-300 mt-2">
-                Enter your password to access the admin dashboard
+                Enter your credentials to access the admin dashboard
               </p>
             </div>
 
             <form onSubmit={handleLogin}>
+              <div className="mb-4">
+                <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Username or Email
+                </label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  placeholder="Enter username or email"
+                />
+              </div>
+
               <div className="mb-6">
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Password
@@ -65,23 +100,18 @@ const Admin = () => {
                 <input
                   type="password"
                   id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  placeholder="Enter admin password"
+                  placeholder="Enter password"
                 />
               </div>
 
-              {error && (
-                <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg">
-                  <p className="text-red-800 dark:text-red-200 text-sm">{error}</p>
-                </div>
-              )}
-
               <button
                 type="submit"
-                disabled={isLoading}
+                disabled={isLoading || authLoading}
                 className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold py-3 px-4 rounded-lg hover:from-primary-700 hover:to-secondary-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'Authenticating...' : 'Login'}
@@ -94,4 +124,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default AdminLogin;
