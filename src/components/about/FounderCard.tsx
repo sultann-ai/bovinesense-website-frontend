@@ -57,7 +57,7 @@ const FounderCard = ({ founder, index }: FounderCardProps) => {
         </p>
         
         {/* Enhanced social links */}
-        <div className="flex justify-center space-x-4">
+        {/* <div className="flex justify-center space-x-4">
           {founder.linkedin && (
             <motion.a
               href={founder.linkedin}
@@ -82,7 +82,7 @@ const FounderCard = ({ founder, index }: FounderCardProps) => {
               <FaTwitter className="text-gray-600 dark:text-gray-300 group-hover/social:text-white transition-colors text-lg" />
             </motion.a>
           )}
-        </div>
+        </div> */}
       </div>
       
       {/* Shimmer effect */}

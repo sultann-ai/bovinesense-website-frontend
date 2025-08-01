@@ -94,7 +94,7 @@ const Blog = () => {
               >
                 Insights, tutorials, and the latest news from the world of AI and software development
               </motion.p>
-
+{/* 
               <motion.div
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -105,7 +105,7 @@ const Blog = () => {
                   text="Subscribe"
                   className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-lg"
                 />
-              </motion.div>
+              </motion.div> */}
             </motion.div>
           </motion.div>
         </HeroBgWrapper>

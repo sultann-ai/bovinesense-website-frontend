@@ -124,6 +124,7 @@ const Services = () => {
                       key={serviceIndex}
                       service={service}
                       delay={serviceIndex * 0.1}
+                      features={service.features}
                     />
                   ))}
                 </div>

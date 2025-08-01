@@ -60,7 +60,7 @@ const TeamCard = ({ member, index }: TeamCardProps) => {
         </p>
         
         {/* Enhanced social link */}
-        <div className="flex justify-center">
+        {/* <div className="flex justify-center">
           {member.linkedin && (
             <motion.a
               href={member.linkedin}
@@ -74,7 +74,7 @@ const TeamCard = ({ member, index }: TeamCardProps) => {
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 opacity-0 group-hover/social:opacity-100 transition-opacity duration-300"></div>
             </motion.a>
           )}
-        </div>
+        </div> */}
       </div>
       
       {/* Floating elements for visual interest */}

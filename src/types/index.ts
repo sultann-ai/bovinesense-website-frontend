@@ -29,12 +29,14 @@ export interface Service {
   services: ServiceItem[];
   createdAt: Date;
   updatedAt: Date;
+  features?: string[];
 }
 
 export interface ServiceItem {
   title: string;
   description: string;
   icon: string;
+  features?: string[];
 }
 
 export interface Partner {

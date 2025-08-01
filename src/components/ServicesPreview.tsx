@@ -12,27 +12,27 @@ const ServicesPreview = () => {
       description: 'Full-stack development solutions tailored to your business needs'
     },
     {
+      icon: 'FaRocket',
+      title: 'AI Automation',
+      description: 'Automate your business processes with intelligent AI-driven solutions'
+    },
+    {
       icon: 'FaBrain',
       title: 'AI & Machine Learning',
       description: 'Intelligent solutions powered by cutting-edge AI technology'
-    },
-    {
-      icon: 'FaRocket',
-      title: 'Digital Transformation',
-      description: 'Modernize your business with innovative digital solutions'
-    }
+    }    
   ];
 
   const serviceFeatures = [
     ['Web Applications', 'Mobile Apps', 'Enterprise Solutions', 'API Development'],
-    ['ML Model Development', 'Computer Vision', 'NLP Applications', 'Predictive Analytics'],
-    ['Cloud Migration', 'Process Automation', 'Data Analytics', 'System Integration']
+    ['AI Agents', 'Workflow Automation', 'Intelligent Chatbots', 'Process Optimization'],
+    ['ML Model Development', 'Computer Vision', 'NLP Applications', 'Predictive Analytics']
   ];
 
   return (
     <section className="py-20 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading 
+        <SectionHeading
           title="Our Services"
           tagline="Comprehensive solutions to accelerate your digital transformation"
           highlightText="Services"
