@@ -54,6 +54,23 @@ const CustomButton = ({
   };
 
   if (href) {
+    // Check if href is an external link
+    const isExternal = href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//');
+    
+    if (isExternal) {
+      return (
+        <motion.a
+          {...motionProps}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${baseClasses} ${gradientClasses}`}
+        >
+          {buttonContent}
+        </motion.a>
+      );
+    }
+    
     return (
       <motion.div {...motionProps}>
         <Link to={href} className={`${baseClasses} ${gradientClasses}`}>

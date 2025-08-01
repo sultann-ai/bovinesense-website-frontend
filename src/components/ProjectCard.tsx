@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import { Project } from '../types';
+import ProjectDetailModal from './ProjectDetailModal';
 
 interface ProjectCardProps {
   project: Project;
@@ -9,14 +10,26 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, delay = 0 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCardClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleLinkClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent modal from opening when clicking links
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay }}
-      whileHover={{ y: -8, scale: 1.02 }}
-      className="group relative bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 rounded-2xl shadow-card dark:shadow-card-dark hover:shadow-card-hover dark:hover:shadow-card-dark-hover transition-all duration-500 border border-gray-100 dark:border-gray-700 overflow-hidden h-full flex flex-col"
-    >
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay }}
+        whileHover={{ y: -8, scale: 1.02 }}
+        onClick={handleCardClick}
+        className="group relative bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 rounded-2xl shadow-card dark:shadow-card-dark hover:shadow-card-hover dark:hover:shadow-card-dark-hover transition-all duration-500 border border-gray-100 dark:border-gray-700 overflow-hidden h-full flex flex-col cursor-pointer"
+      >
       {/* Gradient overlay on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
 
@@ -69,6 +82,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, delay = 0 }) => {
               href={project.liveDemoLink}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={handleLinkClick}
               className="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-all duration-300 group/link"
               whileHover={{ x: 5 }}
             >
@@ -81,6 +95,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, delay = 0 }) => {
               href={project.githubLink}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={handleLinkClick}
               className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-all duration-300 group/link "
               whileHover={{ x: 5 }}
             >
@@ -97,6 +112,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, delay = 0 }) => {
       {/* Bottom gradient line */}
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-blue-500 to-secondary-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     </motion.div>
+
+    {/* Project Detail Modal */}
+    <ProjectDetailModal
+      project={project}
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+    />
+  </>
   );
 };
 

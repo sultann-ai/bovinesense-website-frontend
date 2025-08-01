@@ -133,7 +133,7 @@ const About = () => {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                 <FloatingCard className="p-12 h-full" delay={0.2}>
-                  <div className="flex items-start space-x-6">
+                  <div className="flex max-sm:flex-col max-sm:items-center max-sm:gap-5 items-start sm:space-x-6">
                     <div className="flex-shrink-0">
                       <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl">
                         <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,7 +142,7 @@ const About = () => {
                       </div>
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Our Mission</h3>
+                      <h3 className="text-3xl max-sm:text-center font-bold text-gray-900 dark:text-white mb-6">Our Mission</h3>
                       <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
                         To revolutionize the digital landscape by empowering businesses with cutting-edge AI solutions,
                         custom software development, and innovative technologies that drive unprecedented growth and efficiency.
@@ -170,8 +170,8 @@ const About = () => {
                   </div>
                 </FloatingCard>
 
-                <FloatingCard className="p-12 h-full" delay={0.4}>
-                  <div className="flex items-start space-x-6">
+                <FloatingCard className="p-6 sm:p-12 h-full" delay={0.4}>
+                  <div className="flex items-start sm:space-x-6 max-sm:flex-col max-sm:items-center max-sm:gap-5 ">
                     <div className="flex-shrink-0">
                       <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-2xl">
                         <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,7 +181,7 @@ const About = () => {
                       </div>
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Our Vision</h3>
+                      <h3 className="text-3xl max-sm:text-center font-bold text-gray-900 dark:text-white mb-6">Our Vision</h3>
                       <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
                         To become the global leader in AI-driven software development, setting new industry standards
                         for innovation, quality, and transformative technology solutions that shape the future.

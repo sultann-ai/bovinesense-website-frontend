@@ -1,6 +1,7 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -16,12 +17,28 @@ import BlogDetail from './pages/BlogDetail';
 import Admin from './pages/Admin';
 import './styles/globals.css';
 import CustomBgWrapper from './components/CustomBgWrapper';
+import { useLenis } from 'lenis/react';
+
+// Component to handle scroll to top on route changes
+function ScrollToTop() {
+  const location = useLocation();
+  const lenis = useLenis();
+
+  useEffect(() => {
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    }
+  }, [location.pathname, lenis]);
+
+  return null;
+}
 
 function App() {
   return (
     <HelmetProvider>
       <ThemeProvider>
         <Router>
+          <ScrollToTop />
           <CustomBgWrapper>
             <div className="min-h-screen transition-colors duration-300">
               <Navbar />
@@ -42,6 +59,30 @@ function App() {
               <Footer />
             </div>
           </CustomBgWrapper>
+          <Toaster 
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: '#363636',
+                color: '#fff',
+              },
+              success: {
+                duration: 3000,
+                iconTheme: {
+                  primary: '#10b981',
+                  secondary: '#fff',
+                },
+              },
+              error: {
+                duration: 4000,
+                iconTheme: {
+                  primary: '#ef4444',
+                  secondary: '#fff',
+                },
+              },
+            }}
+          />
         </Router>
       </ThemeProvider>
     </HelmetProvider>

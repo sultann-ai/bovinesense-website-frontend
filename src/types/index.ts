@@ -54,7 +54,11 @@ export interface Project {
   liveDemoLink?: string;
   githubLink?: string;
   image: string;
+  screenshots?: string[];
   tags: string[];
+  features?: string[];
+  technologies?: string[];
+  category?: string;
   createdAt: Date;
   updatedAt: Date;
 }

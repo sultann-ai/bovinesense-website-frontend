@@ -23,12 +23,12 @@ const ServiceCard = ({ service, delay = 0, features }: ServiceCardProps) => {
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
       
       {/* Enhanced icon container */}
-      <div className="relative w-16 h-16 bg-gradient-to-br from-primary-500 via-blue-500 to-secondary-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
+      <div className="relative w-16 h-16 bg-gradient-to-br from-primary-500 via-blue-500 to-secondary-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg mx-auto sm:mx-0">
         <IconComponent className="text-white text-2xl relative z-10" />
         <div className="absolute inset-0 bg-gradient-to-br from-primary-400 via-blue-400 to-secondary-400 rounded-2xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-300"></div>
       </div>
       
-      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors relative z-10">
+      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors relative z-10 text-center sm:text-left">
         {service.title}
       </h3>
       <p className="text-gray-600 dark:text-gray-300 mb-6 relative z-10 leading-relaxed">
