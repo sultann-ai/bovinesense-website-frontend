@@ -1,25 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
+import { useForm } from 'react-hook-form';
 import { foundersService } from '../../services/foundersService';
-import { uploadService } from '../../services/uploadService';
 import { Founder } from '../../types';
-import { Button, Modal, FormInput } from '../reusables';
+import { Button, Modal, FormInput, ImageUpload } from '../reusables';
 import { LoadingSpinner } from '../common-folder';
+
+interface FounderFormData {
+  name: string;
+  role: string;
+  bio: string;
+  email: string;
+  linkedin: string;
+  twitter: string;
+}
 
 const AdminFounders = () => {
   const [founders, setFounders] = useState<Founder[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingFounder, setEditingFounder] = useState<Founder | null>(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    role: '',
-    bio: '',
-    image: '',
-    linkedin: '',
-    twitter: '',
-    email: ''
+  const [submitting, setSubmitting] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string>('');
+  const [imageError, setImageError] = useState<string>('');
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm<FounderFormData>({
+    defaultValues: {
+      name: '',
+      role: '',
+      bio: '',
+      email: '',
+      linkedin: '',
+      twitter: ''
+    }
   });
 
   useEffect(() => {
@@ -37,34 +57,59 @@ const AdminFounders = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: FounderFormData) => {
+    // Validate image for new founders
+    if (!editingFounder && !selectedFile) {
+      setImageError('Profile image is required');
+      return;
+    }
+
     try {
+      setSubmitting(true);
+      setImageError('');
+      
+      const formData = new FormData();
+      
+      // Append all form fields to FormData
+      Object.entries(data).forEach(([key, value]) => {
+        if (value) {
+          formData.append(key, value);
+        }
+      });
+
+      // Append image file if selected
+      if (selectedFile) {
+        formData.append('image', selectedFile);
+      }
+
       if (editingFounder) {
         await foundersService.update(editingFounder._id, formData);
       } else {
         await foundersService.create(formData);
       }
+      
       await fetchFounders();
-      setIsModalOpen(false);
-      setEditingFounder(null);
-      setFormData({ name: '', role: '', bio: '', image: '', linkedin: '', twitter: '', email: '' });
+      handleCloseModal();
     } catch (error) {
       console.error('Error saving founder:', error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
   const handleEdit = (founder: Founder) => {
     setEditingFounder(founder);
-    setFormData({
+    reset({
       name: founder.name,
       role: founder.role,
       bio: founder.bio,
-      image: founder.image,
+      email: founder.email,
       linkedin: founder.linkedin || '',
-      twitter: founder.twitter || '',
-      email: founder.email
+      twitter: founder.twitter || ''
     });
+    setPreviewImage(founder.image);
+    setSelectedFile(null);
+    setImageError('');
     setIsModalOpen(true);
   };
 
@@ -79,15 +124,20 @@ const AdminFounders = () => {
     }
   };
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingFounder(null);
+    setSelectedFile(null);
+    setPreviewImage('');
+    setImageError('');
+    reset();
+  };
+
+  const handleImageChange = (file: File | null, imageUrl?: string) => {
+    setSelectedFile(file);
+    setPreviewImage(imageUrl || '');
     if (file) {
-      try {
-        const imageUrl = await uploadService.uploadImage(file);
-        setFormData({ ...formData, image: imageUrl });
-      } catch (error) {
-        console.error('Error uploading image:', error);
-      }
+      setImageError('');
     }
   };
 
@@ -157,87 +207,86 @@ const AdminFounders = () => {
       {/* Modal */}
       <Modal
         isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-          setEditingFounder(null);
-          setFormData({ name: '', role: '', bio: '', image: '', linkedin: '', twitter: '', email: '' });
-        }}
+        onClose={handleCloseModal}
         title={editingFounder ? 'Edit Founder' : 'Add Founder'}
         size="lg"
       >
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <FormInput
             id="name"
             label="Name"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            register={register}
+            error={errors.name}
             required
           />
+          
           <FormInput
             id="role"
             label="Role"
-            value={formData.role}
-            onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+            register={register}
+            error={errors.role}
             required
           />
+          
           <FormInput
             id="bio"
             label="Bio"
-            value={formData.bio}
-            onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
+            register={register}
+            error={errors.bio}
             multiline
             rows={4}
             required
           />
+          
           <FormInput
             id="email"
             label="Email"
             type="email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            register={register}
+            error={errors.email}
             required
           />
+          
           <FormInput
             id="linkedin"
             label="LinkedIn"
             type="url"
-            value={formData.linkedin}
-            onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
+            register={register}
+            error={errors.linkedin}
+            placeholder="https://linkedin.com/in/username"
           />
+          
           <FormInput
             id="twitter"
             label="Twitter"
             type="url"
-            value={formData.twitter}
-            onChange={(e) => setFormData({ ...formData, twitter: e.target.value })}
+            register={register}
+            error={errors.twitter}
+            placeholder="https://twitter.com/username"
           />
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Image
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            />
-            {formData.image && (
-              <img src={formData.image} alt="Preview" className="mt-2 w-20 h-20 rounded-full object-cover" />
-            )}
-          </div>
+
+          <ImageUpload
+            label="Profile Image"
+            value={previewImage}
+            onChange={handleImageChange}
+            required={!editingFounder}
+            error={imageError}
+          />
+
           <div className="flex space-x-4">
-            <Button type="submit" className="flex-1">
-              {editingFounder ? 'Update' : 'Add'} Founder
+            <Button 
+              type="submit" 
+              className="flex-1"
+              disabled={submitting}
+            >
+              {submitting ? 'Saving...' : editingFounder ? 'Update' : 'Add'} Founder
             </Button>
             <Button
               type="button"
               variant="secondary"
               className="flex-1"
-              onClick={() => {
-                setIsModalOpen(false);
-                setEditingFounder(null);
-                setFormData({ name: '', role: '', bio: '', image: '', linkedin: '', twitter: '', email: '' });
-              }}
+              onClick={handleCloseModal}
+              disabled={submitting}
             >
               Cancel
             </Button>

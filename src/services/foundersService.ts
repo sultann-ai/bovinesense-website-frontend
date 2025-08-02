@@ -14,13 +14,21 @@ export const foundersService = {
     return response.data;
   },
 
-  async create(founder: Omit<Founder, '_id' | 'createdAt' | 'updatedAt'>): Promise<Founder> {
-    const response = await axios.post(`${API_URL}/founders`, founder);
+  async create(formData: FormData): Promise<Founder> {
+    const response = await axios.post(`${API_URL}/founders`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response.data;
   },
 
-  async update(id: string, founder: Partial<Founder>): Promise<Founder> {
-    const response = await axios.put(`${API_URL}/founders/${id}`, founder);
+  async update(id: string, formData: FormData): Promise<Founder> {
+    const response = await axios.put(`${API_URL}/founders/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response.data;
   },
 

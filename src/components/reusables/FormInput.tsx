@@ -1,31 +1,44 @@
+import { UseFormRegister, FieldError } from 'react-hook-form';
+
 interface FormInputProps {
   label: string;
   id: string;
   type?: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
   rows?: number;
   multiline?: boolean;
   className?: string;
+  register?: UseFormRegister<any>;
+  error?: FieldError;
+  // For non-react-hook-form usage
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
 const FormInput = ({
   label,
   id,
   type = 'text',
-  value,
-  onChange,
   placeholder,
   required = false,
   disabled = false,
   rows = 3,
   multiline = false,
-  className = ''
+  className = '',
+  register,
+  error,
+  value,
+  onChange
 }: FormInputProps) => {
-  const baseInputClasses = 'w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white';
+  const baseInputClasses = `w-full px-3 py-2 border ${
+    error ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+  } rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white`;
+
+  const inputProps = register 
+    ? register(id, { required: required ? `${label} is required` : false })
+    : { value, onChange };
 
   return (
     <div className={className}>
@@ -36,25 +49,24 @@ const FormInput = ({
       {multiline ? (
         <textarea
           id={id}
-          value={value}
-          onChange={onChange}
           placeholder={placeholder}
-          required={required}
           disabled={disabled}
           rows={rows}
           className={baseInputClasses}
+          {...inputProps}
         />
       ) : (
         <input
           type={type}
           id={id}
-          value={value}
-          onChange={onChange}
           placeholder={placeholder}
-          required={required}
           disabled={disabled}
           className={baseInputClasses}
+          {...inputProps}
         />
+      )}
+      {error && (
+        <p className="text-red-500 text-xs mt-1">{error.message}</p>
       )}
     </div>
   );
