@@ -4,13 +4,13 @@ import { useAdmin } from '../../contexts/AdminContext';
 import AdminHeader from './AdminHeader';
 import AdminSidebar from './AdminSidebar';
 import AdminFounders from './founders/AdminFounders';
-import AdminTeam from './AdminTeam';
-import AdminServices from './AdminServices';
-import AdminProjects from './AdminProjects';
-import AdminProducts from './AdminProducts';
-import AdminBlog from './AdminBlog';
-import AdminContacts from './AdminContacts';
-import AdminPartners from './AdminPartners';
+import AdminTeam from './team/AdminTeam';
+import AdminServices from './services/AdminServices';
+import AdminProjects from './projects/AdminProjects';
+import AdminProducts from './products/AdminProducts';
+import AdminBlog from './blog/AdminBlog';
+import AdminContacts from './contacts/AdminContacts';
+import AdminPartners from './partners/AdminPartners';
 
 export interface TabItem {
   id: string;
