@@ -3,6 +3,34 @@ import { Product } from '../types';
 
 const API_URL = 'http://localhost:5000/api';
 
+// Create axios instance with interceptors for protected routes
+const api = axios.create({
+  baseURL: API_URL,
+});
+
+// Add auth token to requests
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('admin_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Handle auth errors
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('admin_token');
+      if (!window.location.pathname.includes('/admin-login')) {
+        window.location.href = '/admin-login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const productsService = {
   async getAll(): Promise<Product[]> {
     const response = await axios.get(`${API_URL}/products`);
@@ -19,17 +47,44 @@ export const productsService = {
     return response.data;
   },
 
-  async create(product: Omit<Product, '_id' | 'createdAt' | 'updatedAt'>): Promise<Product> {
-    const response = await axios.post(`${API_URL}/products`, product);
+  async create(formData: FormData): Promise<Product> {
+    const response = await api.post('/products', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response.data;
   },
 
-  async update(id: string, product: Partial<Product>): Promise<Product> {
-    const response = await axios.put(`${API_URL}/products/${id}`, product);
+  async update(id: string, formData: FormData): Promise<Product> {
+    const response = await api.put(`/products/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response.data;
   },
 
   async delete(id: string): Promise<void> {
-    await axios.delete(`${API_URL}/products/${id}`);
+    await api.delete(`/products/${id}`);
+  },
+
+  async getScreenshots(id: string): Promise<{ screenshots: string[] }> {
+    const response = await axios.get(`${API_URL}/products/${id}/screenshots`);
+    return response.data;
+  },
+
+  async addScreenshots(id: string, formData: FormData): Promise<{ message: string; added: string[]; total: number; screenshots: string[] }> {
+    const response = await api.post(`/products/${id}/screenshots`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+
+  async removeScreenshot(id: string, index: number): Promise<{ message: string; removed: string; remainingCount: number; screenshots: string[] }> {
+    const response = await api.delete(`/products/${id}/screenshots/${index}`);
+    return response.data;
   }
 };

@@ -18,8 +18,8 @@ const AdminLogin = () => {
   useEffect(() => {
     console.log('AdminLogin: isAuthenticated:', isAuthenticated, 'authLoading:', authLoading);
     if (isAuthenticated && !authLoading) {
-      console.log('AdminLogin: Navigating to dashboard');
-      navigate('/admin/dashboard', { replace: true });
+      console.log('AdminLogin: Navigating to admin');
+      navigate('/admin', { replace: true });
     }
   }, [isAuthenticated, authLoading, navigate]);
 

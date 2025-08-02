@@ -1,47 +1,35 @@
 import React, { useState } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import { FaUsers, FaServicestack, FaProjectDiagram, FaNewspaper, FaEnvelope, FaHandshake } from 'react-icons/fa';
 import { useAdmin } from '../../contexts/AdminContext';
 import AdminHeader from './AdminHeader';
 import AdminSidebar from './AdminSidebar';
-import AdminFounders from './founders/AdminFounders';
-import AdminTeam from './team/AdminTeam';
-import AdminServices from './services/AdminServices';
-import AdminProjects from './projects/AdminProjects';
-import AdminProducts from './products/AdminProducts';
-import AdminBlog from './blog/AdminBlog';
-import AdminContacts from './contacts/AdminContacts';
-import AdminPartners from './partners/AdminPartners';
 
 export interface TabItem {
   id: string;
   label: string;
   icon: React.ComponentType<any>;
-  component: React.ComponentType;
+  path: string;
 }
 
 const AdminDashboardLayout = () => {
-  const [activeTab, setActiveTab] = useState('founders');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { admin } = useAdmin();
+  const location = useLocation();
 
   const tabs: TabItem[] = [
-    { id: 'founders', label: 'Founders', icon: FaUsers, component: AdminFounders },
-    { id: 'team', label: 'Team', icon: FaUsers, component: AdminTeam },
-    { id: 'services', label: 'Services', icon: FaServicestack, component: AdminServices },
-    { id: 'projects', label: 'Projects', icon: FaProjectDiagram, component: AdminProjects },
-    { id: 'products', label: 'Products', icon: FaProjectDiagram, component: AdminProducts },
-    { id: 'blog', label: 'Blog', icon: FaNewspaper, component: AdminBlog },
-    { id: 'contacts', label: 'Contacts', icon: FaEnvelope, component: AdminContacts },
-    { id: 'partners', label: 'Partners', icon: FaHandshake, component: AdminPartners }
+    { id: 'founders', label: 'Founders', icon: FaUsers, path: '/admin/founders' },
+    { id: 'team', label: 'Team', icon: FaUsers, path: '/admin/team' },
+    { id: 'services', label: 'Services', icon: FaServicestack, path: '/admin/services' },
+    { id: 'projects', label: 'Projects', icon: FaProjectDiagram, path: '/admin/projects' },
+    { id: 'products', label: 'Products', icon: FaProjectDiagram, path: '/admin/products' },
+    { id: 'blog', label: 'Blog', icon: FaNewspaper, path: '/admin/blog' },
+    { id: 'contacts', label: 'Contacts', icon: FaEnvelope, path: '/admin/contacts' },
+    { id: 'partners', label: 'Partners', icon: FaHandshake, path: '/admin/partners' }
   ];
 
-  const renderContent = () => {
-    const activeTabData = tabs.find(tab => tab.id === activeTab);
-    if (!activeTabData) return null;
-    
-    const Component = activeTabData.component;
-    return <Component />;
-  };
+  // Get active tab from current location
+  const activeTab = tabs.find(tab => location.pathname === tab.path)?.id || 'founders';
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -56,7 +44,6 @@ const AdminDashboardLayout = () => {
         <AdminSidebar
           tabs={tabs}
           activeTab={activeTab}
-          onTabChange={setActiveTab}
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
         />
@@ -66,7 +53,7 @@ const AdminDashboardLayout = () => {
           <div className="p-4 lg:p-8">
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg">
               <div className="p-6">
-                {renderContent()}
+                <Outlet />
               </div>
             </div>
           </div>

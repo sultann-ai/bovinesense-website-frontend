@@ -1,3 +1,4 @@
+import React from 'react';
 import { UseFormRegister, FieldError, RegisterOptions } from 'react-hook-form';
 
 interface FormInputProps {
@@ -18,7 +19,10 @@ interface FormInputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-const FormInput = ({
+const FormInput = React.forwardRef<
+  HTMLInputElement | HTMLTextAreaElement,
+  FormInputProps
+>(({
   label,
   id,
   type = 'text',
@@ -33,7 +37,7 @@ const FormInput = ({
   validation,
   value,
   onChange
-}: FormInputProps) => {
+}, ref) => {
   const baseInputClasses = `w-full px-3 py-2 border ${
     error ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
   } rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white`;
@@ -65,6 +69,7 @@ const FormInput = ({
           disabled={disabled}
           rows={rows}
           className={baseInputClasses}
+          ref={ref as React.RefObject<HTMLTextAreaElement>}
           {...inputProps}
         />
       ) : (
@@ -74,6 +79,7 @@ const FormInput = ({
           placeholder={placeholder}
           disabled={disabled}
           className={baseInputClasses}
+          ref={ref as React.RefObject<HTMLInputElement>}
           {...inputProps}
         />
       )}
@@ -82,6 +88,8 @@ const FormInput = ({
       )}
     </div>
   );
-};
+});
+
+FormInput.displayName = 'FormInput';
 
 export default FormInput;

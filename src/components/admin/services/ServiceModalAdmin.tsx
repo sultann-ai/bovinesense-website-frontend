@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { FaPlus, FaTrash } from 'react-icons/fa';
+import { Plus, Trash2 } from 'lucide-react';
 import { servicesService } from '../../../services/servicesService';
 import { Service, ServiceItem } from '../../../types';
 import { Button, FormInput, Modal } from '../../reusables';
@@ -9,7 +10,6 @@ import { Button, FormInput, Modal } from '../../reusables';
 interface ServiceFormData {
   category: string;
   services: ServiceItem[];
-  features: string[];
 }
 
 interface ServiceModalProps {
@@ -21,6 +21,7 @@ interface ServiceModalProps {
 
 const ServiceModal = ({ isOpen, onClose, editingService, onSuccess }: ServiceModalProps) => {
   const [submitting, setSubmitting] = useState(false);
+  const [serviceFeatures, setServiceFeatures] = useState<{ [key: number]: string[] }>({});
 
   const {
     register,
@@ -31,8 +32,7 @@ const ServiceModal = ({ isOpen, onClose, editingService, onSuccess }: ServiceMod
   } = useForm<ServiceFormData>({
     defaultValues: {
       category: '',
-      services: [{ title: '', description: '', icon: '' }],
-      features: ['']
+      services: [{ title: '', description: '', icon: '' }]
     },
     mode: 'onSubmit',
     reValidateMode: 'onChange'
@@ -47,40 +47,96 @@ const ServiceModal = ({ isOpen, onClose, editingService, onSuccess }: ServiceMod
     name: 'services'
   });
 
-  const {
-    fields: featureFields,
-    append: appendFeature,
-    remove: removeFeature
-  } = useFieldArray({
-    control,
-    name: 'features' as const
-  });
-
+  // Initialize service features state
   useEffect(() => {
     if (editingService) {
       reset({
         category: editingService.category,
-        services: editingService.services || [{ title: '', description: '', icon: '' }],
-        features: editingService.features || ['']
+        services: editingService.services || [{ title: '', description: '', icon: '' }]
       });
+      // Initialize features for each service
+      const featuresMap: { [key: number]: string[] } = {};
+      editingService.services?.forEach((service, index) => {
+        featuresMap[index] = service.features || [''];
+      });
+      setServiceFeatures(featuresMap);
     } else {
       reset({
         category: '',
-        services: [{ title: '', description: '', icon: '' }],
-        features: ['']
+        services: [{ title: '', description: '', icon: '' }]
       });
+      setServiceFeatures({ 0: [''] });
     }
   }, [editingService, reset]);
+
+  // Feature management functions
+  const addFeature = (serviceIndex: number) => {
+    setServiceFeatures(prev => ({
+      ...prev,
+      [serviceIndex]: [...(prev[serviceIndex] || []), '']
+    }));
+  };
+
+  const removeFeature = (serviceIndex: number, featureIndex: number) => {
+    setServiceFeatures(prev => ({
+      ...prev,
+      [serviceIndex]: prev[serviceIndex]?.filter((_, i) => i !== featureIndex) || []
+    }));
+  };
+
+  const updateFeature = (serviceIndex: number, featureIndex: number, value: string) => {
+    setServiceFeatures(prev => ({
+      ...prev,
+      [serviceIndex]: prev[serviceIndex]?.map((feature, i) => 
+        i === featureIndex ? value : feature
+      ) || []
+    }));
+  };
+
+  // Handle adding/removing services
+  const handleAddService = () => {
+    const newIndex = serviceFields.length;
+    appendService({ title: '', description: '', icon: '' });
+    setServiceFeatures(prev => ({
+      ...prev,
+      [newIndex]: ['']
+    }));
+  };
+
+  const handleRemoveService = (index: number) => {
+    removeService(index);
+    setServiceFeatures(prev => {
+      const newFeatures = { ...prev };
+      delete newFeatures[index];
+      // Reindex remaining features
+      const reindexed: { [key: number]: string[] } = {};
+      Object.keys(newFeatures).forEach((key, i) => {
+        const numKey = parseInt(key);
+        if (numKey > index) {
+          reindexed[numKey - 1] = newFeatures[numKey];
+        } else if (numKey < index) {
+          reindexed[numKey] = newFeatures[numKey];
+        }
+      });
+      return reindexed;
+    });
+  };
 
   const onSubmit = async (data: ServiceFormData) => {
     try {
       setSubmitting(true);
       
-      // Filter out empty services and features
+      // Filter out empty services and add features to each service
+      const servicesWithFeatures = data.services
+        .filter(service => service.title.trim() !== '')
+        .map((service, index) => ({
+          ...service,
+          features: serviceFeatures[index]?.filter(feature => feature.trim() !== '') || []
+        }));
+
       const filteredData = {
         ...data,
-        services: data.services.filter(service => service.title.trim() !== ''),
-        features: data.features.filter(feature => feature.trim() !== '')
+        services: servicesWithFeatures
       };
 
       if (editingService) {
@@ -139,7 +195,7 @@ const ServiceModal = ({ isOpen, onClose, editingService, onSuccess }: ServiceMod
               type="button"
               variant="secondary"
               size="sm"
-              onClick={() => appendService({ title: '', description: '', icon: '' })}
+              onClick={handleAddService}
               disabled={submitting}
             >
               <FaPlus className="mr-1" size={12} /> Add Service
@@ -156,7 +212,7 @@ const ServiceModal = ({ isOpen, onClose, editingService, onSuccess }: ServiceMod
                   {serviceFields.length > 1 && (
                     <button
                       type="button"
-                      onClick={() => removeService(index)}
+                      onClick={() => handleRemoveService(index)}
                       className="text-red-600 hover:text-red-800 p-1"
                       disabled={submitting}
                     >
@@ -196,51 +252,54 @@ const ServiceModal = ({ isOpen, onClose, editingService, onSuccess }: ServiceMod
                     disabled={submitting}
                     placeholder="e.g., fas fa-code, fas fa-mobile-alt"
                   />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Features Section */}
-        <div>
-          <div className="flex justify-between items-center mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Features
-            </label>
-            <Button
-              type="button"
-              variant="secondary"
-              size="sm"
-              onClick={() => appendFeature('')}
-              disabled={submitting}
-            >
-              <FaPlus className="mr-1" size={12} /> Add Feature
-            </Button>
-          </div>
-          
-          <div className="space-y-2">
-            {featureFields.map((field, index) => (
-              <div key={field.id} className="flex items-center space-x-2">
-                <FormInput
-                  id={`features.${index}`}
-                  label=""
-                  register={register}
-                  error={errors.features?.[index]}
-                  disabled={submitting}
-                  placeholder="Feature description"
-                  className="flex-1"
-                />
-                {featureFields.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => removeFeature(index)}
-                    className="text-red-600 hover:text-red-800 p-2"
-                    disabled={submitting}
-                  >
-                    <FaTrash size={12} />
-                  </button>
-                )}
+                  {/* Features for this service */}
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <label className="block text-sm font-medium text-gray-700">
+                        Features <span className="text-red-500">*</span>
+                      </label>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        onClick={() => addFeature(index)}
+                        className="flex items-center gap-2 text-sm"
+                        disabled={submitting}
+                      >
+                        <Plus size={16} />
+                        Add Feature
+                      </Button>
+                    </div>
+                    <div className="space-y-2">
+                      {(serviceFeatures[index] || ['']).map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex items-center gap-2">
+                          <input
+                            type="text"
+                            value={feature}
+                            onChange={(e) => updateFeature(index, featureIndex, e.target.value)}
+                            placeholder={`Feature ${featureIndex + 1}`}
+                            disabled={submitting}
+                            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                          />
+                          {(serviceFeatures[index] || []).length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => removeFeature(index, featureIndex)}
+                              className="p-2 text-red-600 hover:bg-red-50 rounded transition-colors disabled:opacity-50"
+                              title="Remove feature"
+                              disabled={submitting}
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Add key features for this service. At least one feature is required.
+                    </p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

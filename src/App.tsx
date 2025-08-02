@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -16,7 +16,18 @@ import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import BlogDetail from './pages/BlogDetail';
 import AdminLogin from './pages/AdminLogin';
-import AdminDashboard from './pages/AdminDashboard';
+import AdminProductAdd from './pages/AdminProductAdd';
+import AdminProductDetails from './pages/AdminProductDetails';
+import AdminProductEdit from './pages/AdminProductEdit';
+import AdminDashboardLayout from './components/admin/AdminDashboardLayout';
+import AdminFounders from './components/admin/founders/AdminFounders';
+import AdminTeam from './components/admin/team/AdminTeam';
+import AdminServices from './components/admin/services/AdminServices';
+import AdminProjects from './components/admin/projects/AdminProjects';
+import AdminProducts from './components/admin/products/AdminProducts';
+import AdminBlog from './components/admin/blog/AdminBlog';
+import AdminContacts from './components/admin/contacts/AdminContacts';
+import AdminPartners from './components/admin/partners/AdminPartners';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import './styles/globals.css';
 import CustomBgWrapper from './components/reusables/CustomBgWrapper';
@@ -58,11 +69,54 @@ function App() {
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/blog/:slug" element={<BlogDetail />} />
                     <Route path="/admin-login" element={<AdminLogin />} />
+                    
+                    {/* Admin Routes */}
                     <Route
-                      path="/admin/dashboard"
+                      path="/admin"
                       element={
                         <ProtectedRoute>
-                          <AdminDashboard />
+                          <AdminDashboardLayout />
+                        </ProtectedRoute>
+                      }
+                    >
+                      <Route path="founders" element={<AdminFounders />} />
+                      <Route path="team" element={<AdminTeam />} />
+                      <Route path="services" element={<AdminServices />} />
+                      <Route path="projects" element={<AdminProjects />} />
+                      <Route path="products" element={<AdminProducts />} />
+                      <Route path="blog" element={<AdminBlog />} />
+                      <Route path="contacts" element={<AdminContacts />} />
+                      <Route path="partners" element={<AdminPartners />} />
+                      {/* Redirect /admin to /admin/founders by default */}
+                      <Route index element={<AdminFounders />} />
+                    </Route>
+
+                    {/* Legacy admin dashboard route - redirect to new structure */}
+                    <Route
+                      path="/admin/dashboard"
+                      element={<Navigate to="/admin" replace />}
+                    />
+                    <Route
+                      path="/admin/products/add"
+                      element={
+                        <ProtectedRoute>
+                          <AdminProductAdd />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/admin/products/:id"
+                      element={
+                        <ProtectedRoute>
+                          <AdminProductDetails />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/admin/products/:id/edit"
+                      element={
+                        <ProtectedRoute>
+                          <AdminProductEdit />
                         </ProtectedRoute>
                       }
                     />

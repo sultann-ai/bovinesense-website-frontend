@@ -1,11 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
 import { TabItem } from './AdminDashboardLayout';
 
 interface AdminSidebarProps {
   tabs: TabItem[];
   activeTab: string;
-  onTabChange: (tabId: string) => void;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -13,10 +13,10 @@ interface AdminSidebarProps {
 const AdminSidebar: React.FC<AdminSidebarProps> = ({
   tabs,
   activeTab,
-  onTabChange,
   isOpen,
   onClose
 }) => {
+  const navigate = useNavigate();
   return (
     <>
       {/* Mobile overlay */}
@@ -53,7 +53,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
               <li key={tab.id}>
                 <button
                   onClick={() => {
-                    onTabChange(tab.id);
+                    navigate(tab.path);
                     onClose(); // Close sidebar on mobile after selection
                   }}
                   className={`w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors ${
