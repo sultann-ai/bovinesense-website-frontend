@@ -1,5 +1,5 @@
 # Admin Dashboard Refactoring Summary
-
+.
 ## Overview
 The admin dashboard has been successfully refactored with a protected route system and modular component structure.
 
