@@ -91,7 +91,6 @@ const ImageUpload = ({
         type="file"
         accept={accept}
         onChange={handleFileChange}
-        required={required}
         className="hidden"
       />
       

@@ -1,4 +1,4 @@
-import { UseFormRegister, FieldError } from 'react-hook-form';
+import { UseFormRegister, FieldError, RegisterOptions } from 'react-hook-form';
 
 interface FormInputProps {
   label: string;
@@ -12,6 +12,7 @@ interface FormInputProps {
   className?: string;
   register?: UseFormRegister<any>;
   error?: FieldError;
+  validation?: RegisterOptions;
   // For non-react-hook-form usage
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
@@ -29,6 +30,7 @@ const FormInput = ({
   className = '',
   register,
   error,
+  validation,
   value,
   onChange
 }: FormInputProps) => {
@@ -36,8 +38,18 @@ const FormInput = ({
     error ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
   } rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white`;
 
+  // Combine default validation with custom validation
+  const finalValidationRules: RegisterOptions = {
+    ...(validation || {}),
+    ...(required ? { required: `${label} is required` } : {})
+  };
+
+  const registerProps = register 
+    ? register(id, finalValidationRules)
+    : {};
+
   const inputProps = register 
-    ? register(id, { required: required ? `${label} is required` : false })
+    ? registerProps
     : { value, onChange };
 
   return (

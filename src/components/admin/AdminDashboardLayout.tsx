@@ -3,7 +3,7 @@ import { FaUsers, FaServicestack, FaProjectDiagram, FaNewspaper, FaEnvelope, FaH
 import { useAdmin } from '../../contexts/AdminContext';
 import AdminHeader from './AdminHeader';
 import AdminSidebar from './AdminSidebar';
-import AdminFounders from './AdminFounders';
+import AdminFounders from './founders/AdminFounders';
 import AdminTeam from './AdminTeam';
 import AdminServices from './AdminServices';
 import AdminProjects from './AdminProjects';
