@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { foundersService } from '../../services/foundersService';
 import { Founder } from '../../types';
-import SectionHeading from '../SectionHeading';
+import SectionHeading from '../reusables/SectionHeading';
 import FounderCard from './FounderCard';
 
 const FoundersSection = () => {

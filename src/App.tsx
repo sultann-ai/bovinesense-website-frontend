@@ -4,8 +4,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AdminProvider } from './contexts/AdminContext';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Navbar from './components/common/Navbar';
+import Footer from './components/common/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
@@ -17,9 +17,9 @@ import Blog from './pages/Blog';
 import BlogDetail from './pages/BlogDetail';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
-import { ProtectedRoute } from './components/common-folder';
+import ProtectedRoute from './components/common/ProtectedRoute';
 import './styles/globals.css';
-import CustomBgWrapper from './components/CustomBgWrapper';
+import CustomBgWrapper from './components/reusables/CustomBgWrapper';
 import { useLenis } from 'lenis/react';
 
 // Component to handle scroll to top on route changes
@@ -58,20 +58,20 @@ function App() {
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/blog/:slug" element={<BlogDetail />} />
                     <Route path="/admin-login" element={<AdminLogin />} />
-                    <Route 
-                      path="/admin/dashboard" 
+                    <Route
+                      path="/admin/dashboard"
                       element={
                         <ProtectedRoute>
                           <AdminDashboard />
                         </ProtectedRoute>
-                      } 
+                      }
                     />
                   </Routes>
                 </main>
                 <Footer />
               </div>
             </CustomBgWrapper>
-            <Toaster 
+            <Toaster
               position="top-right"
               toastOptions={{
                 duration: 4000,

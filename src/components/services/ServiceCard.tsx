@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { ServiceItem } from '../types';
-import { getIconComponent } from '../utils/iconUtils';
+import { ServiceItem } from '../../types';
+import { getIconComponent } from '../../utils/iconUtils';
 
 interface ServiceCardProps {
   service: ServiceItem;

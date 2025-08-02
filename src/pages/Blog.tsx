@@ -3,10 +3,10 @@ import { Helmet } from 'react-helmet-async';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { blogService } from '../services/blogService';
 import { BlogPost } from '../types';
-import BlogCard from '../components/BlogCard';
-import HeroBgWrapper from '../components/HeroBgWrapper';
-import GradientHeading from '../components/GradientHeading';
-import CustomButton from '../components/CustomButton';
+import BlogCard from '../components/blog/BlogCard';
+import HeroBgWrapper from '../components/common/HeroBgWrapper';
+import GradientHeading from '../components/reusables/GradientHeading';
+import CustomButton from '../components/reusables/CustomButton';
 
 const Blog = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);

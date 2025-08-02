@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
 import ServiceCard from './ServiceCard';
-import SectionHeading from './SectionHeading';
-import CustomButton from './CustomButton';
+import SectionHeading from '../reusables/SectionHeading';
+import CustomButton from '../reusables/CustomButton';
 
 const ServicesPreview = () => {
   const services = [

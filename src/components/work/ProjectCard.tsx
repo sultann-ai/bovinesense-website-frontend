@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
-import { Project } from '../types';
+import { Project } from '../../types';
 import ProjectDetailModal from './ProjectDetailModal';
 
 interface ProjectCardProps {

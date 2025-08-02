@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { partnersService } from '../services/partnersService';
 import { Partner } from '../types';
-import SectionHeading from './SectionHeading';
+import SectionHeading from './reusables/SectionHeading';
 
 const PartnersCarousel = () => {
   const [partners, setPartners] = useState<Partner[]>([]);

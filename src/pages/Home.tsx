@@ -4,11 +4,11 @@ import { FaArrowRight, FaCode, FaBrain, FaRocket } from 'react-icons/fa';
 import Hero from '../components/Hero';
 import FoundersSection from '../components/about/FoundersSection';
 import PartnersCarousel from '../components/PartnersCarousel';
-import ServicesPreview from '../components/ServicesPreview';
-import GradientHeading from '../components/GradientHeading';
-import SectionHeading from '../components/SectionHeading';
+import ServicesPreview from '../components/services/ServicesPreview';
+import GradientHeading from '../components/reusables/GradientHeading';
+import SectionHeading from '../components/reusables/SectionHeading';
 import ValueCard from '../components/reusables/ValueCard';
-import CustomButton from '../components/CustomButton';
+import CustomButton from '../components/reusables/CustomButton';
 import CTAWrapper from '../components/reusables/CTAWrapper';
 
 const featuresData = [

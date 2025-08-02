@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { FaArrowRight, FaPlay, FaStar, FaCode, FaBrain } from 'react-icons/fa';
-import GradientHeading from './GradientHeading';
-import CustomButton from './CustomButton';
+import GradientHeading from './reusables/GradientHeading';
+import CustomButton from './reusables/CustomButton';
 import PerlinNoiseVisualizer from './PerlinNoiseVisualizer';
 
 const Hero = () => {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes, FaExternalLinkAlt, FaGithub, FaCheckCircle, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { Project } from '../types';
-import CustomButton from './CustomButton';
+import { Project } from '../../types';
+import CustomButton from '../reusables/CustomButton';
 
 interface ProjectDetailModalProps {
     project: Project | null;

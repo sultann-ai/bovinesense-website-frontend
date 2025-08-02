@@ -3,10 +3,10 @@ import { Helmet } from 'react-helmet-async';
 import { motion, useScroll, useTransform} from 'framer-motion';
 import FoundersSection from '../components/about/FoundersSection';
 import TeamSection from '../components/about/TeamSection';
-import GradientHeading from '../components/GradientHeading';
-import SectionHeading from '../components/SectionHeading';
-import CustomButton from '../components/CustomButton';
-import HeroBgWrapper from '../components/HeroBgWrapper';
+import GradientHeading from '../components/reusables/GradientHeading';
+import SectionHeading from '../components/reusables/SectionHeading';
+import CustomButton from '../components/reusables/CustomButton';
+import HeroBgWrapper from '../components/common/HeroBgWrapper';
 import ValueCard from '../components/reusables/ValueCard';
 import CTAWrapper from '../components/reusables/CTAWrapper';
 

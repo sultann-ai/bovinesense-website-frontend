@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { foundersService } from '../../../services/foundersService';
-import { Founder } from '../../../types';
+import { foundersService } from '../../src/services/foundersService';
+import { Founder } from '../../src/types';
 
 export const useFounders = () => {
   const [founders, setFounders] = useState<Founder[]>([]);

@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet-async';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { servicesService } from '../services/servicesService';
 import { Service } from '../types';
-import ServiceCard from '../components/ServiceCard';
-import HeroBgWrapper from '../components/HeroBgWrapper';
-import GradientHeading from '../components/GradientHeading';
+import ServiceCard from '../components/services/ServiceCard';
+import HeroBgWrapper from '../components/common/HeroBgWrapper';
+import GradientHeading from '../components/reusables/GradientHeading';
 
 const Services = () => {
   const [services, setServices] = useState<Service[]>([]);

@@ -3,10 +3,9 @@ import { Helmet } from 'react-helmet-async';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { projectsService } from '../services/projectsService';
 import { Project } from '../types';
-import ProjectCard from '../components/ProjectCard';
-import HeroBgWrapper from '../components/HeroBgWrapper';
-import GradientHeading from '../components/GradientHeading';
-import sampleProjectData from "../constants/sampleProjectData"
+import ProjectCard from '../components/work/ProjectCard';
+import HeroBgWrapper from '../components/common/HeroBgWrapper';
+import GradientHeading from '../components/reusables/GradientHeading';
 
 const Work = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -102,7 +101,7 @@ const Work = () => {
         <section className="py-20 bg-white dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {sampleProjectData.map((project, index) => (
+              {projects.map((project, index) => (
                 <ProjectCard
                   key={project._id}
                   project={project}

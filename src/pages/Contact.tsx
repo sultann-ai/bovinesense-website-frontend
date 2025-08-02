@@ -4,9 +4,9 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import { contactService } from '../services/contactService';
-import HeroBgWrapper from '../components/HeroBgWrapper';
-import GradientHeading from '../components/GradientHeading';
-import CustomButton from '../components/CustomButton';
+import HeroBgWrapper from '../components/common/HeroBgWrapper';
+import GradientHeading from '../components/reusables/GradientHeading';
+import CustomButton from '../components/reusables/CustomButton';
 
 const Contact = () => {
   const [formData, setFormData] = useState({

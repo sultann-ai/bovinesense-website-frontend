@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet-async';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { productsService } from '../services/productsService';
 import { Product } from '../types';
-import ProductCard from '../components/ProductCard';
-import HeroBgWrapper from '../components/HeroBgWrapper';
-import GradientHeading from '../components/GradientHeading';
+import ProductCard from '../components/products/ProductCard';
+import HeroBgWrapper from '../components/common/HeroBgWrapper';
+import GradientHeading from '../components/reusables/GradientHeading';
 
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);

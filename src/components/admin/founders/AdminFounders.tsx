@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { Founder } from '../../../types';
 import { Button } from '../../reusables';
-import { LoadingSpinner } from '../../common-folder';
+import LoadingSpinner from '../../common/LoadingSpinner';
 import FounderCard from './FounderCardAdmin';
 import FounderModal from './FounderModalAdmin';
-import { useFounders } from './useFoundersAdmin';
+import { useFounders } from '../../../../hooks/admin/useFoundersAdmin';
 
 const AdminFounders = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingFounder, setEditingFounder] = useState<Founder | null>(null);
-  
+
   const { founders, loading, deletingId, fetchFounders, deleteFounder } = useFounders();
 
   const handleEdit = (founder: Founder) => {
