@@ -14,13 +14,21 @@ export const projectsService = {
     return response.data;
   },
 
-  async create(project: Omit<Project, '_id' | 'createdAt' | 'updatedAt'>): Promise<Project> {
-    const response = await axios.post(`${API_URL}/projects`, project);
+  async create(formData: FormData): Promise<Project> {
+    const response = await axios.post(`${API_URL}/projects`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response.data;
   },
 
-  async update(id: string, project: Partial<Project>): Promise<Project> {
-    const response = await axios.put(`${API_URL}/projects/${id}`, project);
+  async update(id: string, formData: FormData): Promise<Project> {
+    const response = await axios.put(`${API_URL}/projects/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response.data;
   },
 

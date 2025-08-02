@@ -14,13 +14,21 @@ export const teamService = {
     return response.data;
   },
 
-  async create(member: Omit<TeamMember, '_id' | 'createdAt' | 'updatedAt'>): Promise<TeamMember> {
-    const response = await axios.post(`${API_URL}/team`, member);
+  async create(formData: FormData): Promise<TeamMember> {
+    const response = await axios.post(`${API_URL}/team`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response.data;
   },
 
-  async update(id: string, member: Partial<TeamMember>): Promise<TeamMember> {
-    const response = await axios.put(`${API_URL}/team/${id}`, member);
+  async update(id: string, formData: FormData): Promise<TeamMember> {
+    const response = await axios.put(`${API_URL}/team/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response.data;
   },
 

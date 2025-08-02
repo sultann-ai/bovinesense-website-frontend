@@ -45,6 +45,7 @@ export interface Partner {
   logo: string;
   website: string;
   createdAt: Date;
+  updatedAt: Date; 
 }
 
 export interface Project {
@@ -86,6 +87,10 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   author: string;
+  category?: string;
+  tags?: string[];
+  published?: boolean;
+  featured?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -96,4 +101,18 @@ export interface Contact {
   email: string;
   message: string;
   submittedAt: Date;
+  createdAt: Date; 
+  updatedAt: Date; 
+}
+
+export interface Admin { 
+  _id: string;
+  username: string;
+  password: string;
+  email: string;
+  role: 'admin' | 'super-admin';
+  isActive: boolean;
+  lastLogin?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
