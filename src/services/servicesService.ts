@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Service } from '../types';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 export const servicesService = {
   async getAll(): Promise<Service[]> {
