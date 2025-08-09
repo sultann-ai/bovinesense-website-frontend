@@ -21,7 +21,7 @@ const CustomButton = ({
   outlined = false,
   className = ''
 }: CustomButtonProps) => {
-  const baseClasses = `group relative inline-flex items-center px-10 py-4 font-bold rounded-xl overflow-hidden transition-all duration-300 text-lg ${className}`;
+  const baseClasses = `group relative inline-flex items-center px-9 py-3 font-bold rounded-xl overflow-hidden transition-all duration-300 text-md ${className}`;
    
   const gradientClasses = outlined
     ? "bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white font-semibold hover:bg-white dark:hover:bg-gray-700"

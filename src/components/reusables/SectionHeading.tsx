@@ -28,7 +28,7 @@ const SectionHeading = ({
     const parts = title.split(new RegExp(`(${highlightText})`, 'gi'));
     
     return (
-      <h2 className={`text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 ${className}`}>
+      <h2 className={`text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 ${className}`}>
         {parts.map((part, index) => 
           part.toLowerCase() === highlightText.toLowerCase() ? (
             <span 

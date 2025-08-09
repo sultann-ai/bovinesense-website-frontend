@@ -18,7 +18,7 @@ const GradientHeading: React.FC<GradientHeadingProps> = ({
   const parts = childrenString.split(new RegExp(`(${highlightText})`, 'gi'));
   
   return (
-    <h1 className={`text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight ${className}`}>
+    <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight ${className}`}>
       {parts.map((part, index) => {
         if (part.toLowerCase() === highlightText.toLowerCase()) {
           return (

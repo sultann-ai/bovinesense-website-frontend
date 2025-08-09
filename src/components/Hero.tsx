@@ -6,7 +6,7 @@ import PerlinNoiseVisualizer from './PerlinNoiseVisualizer';
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-primary-50 to-secondary-50 dark:from-gray-950 dark:via-slate-900 dark:to-gray-900">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-primary-50 to-secondary-50 dark:from-gray-950 dark:via-slate-900 dark:to-gray-900 pt-12 md:pt-14">
       {/* Enhanced animated background elements */}
       <div className="absolute inset-0 bg-mesh-gradient opacity-30 dark:opacity-20"></div>
       
@@ -109,7 +109,7 @@ const Hero = () => {
         </motion.div>
 
         {/* Enhanced floating stats */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
@@ -134,7 +134,7 @@ const Hero = () => {
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
         </div>
       </div>
 

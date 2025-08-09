@@ -37,6 +37,7 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
+      // @ts-ignore
       await contactService.create(formData);
       toast.success("Thank you for your message! We'll get back to you soon.");
       setFormData({ name: '', email: '', message: '' });
@@ -97,7 +98,7 @@ const Contact = () => {
               >
                 <CustomButton
                   text="Book Meeting"
-                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-lg"
+                  className="px-9 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"
                 />
               </motion.div>
             </motion.div>
