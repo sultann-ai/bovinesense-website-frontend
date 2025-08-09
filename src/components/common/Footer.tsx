@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaLinkedin, FaTwitter, FaGithub, FaEnvelope } from 'react-icons/fa';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const Footer = () => {
+  const { theme } = useTheme();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -12,10 +14,13 @@ const Footer = () => {
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">Z</span>
+              <div className="w-[8.5rem] rounded-lg flex items-center justify-center">
+                <img 
+                  src={'/whiteLogo.png'}
+                  alt="ZyninLabs Logo"
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <span className="text-xl font-bold">ZyninLabs</span>
             </div>
             <p className="text-gray-400 mb-4 max-w-md">
               Pioneering AI-powered solutions and custom software development. 
@@ -61,7 +66,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <div className="border-t border-gray-800 mt-8n pt-8 text-center text-gray-400">
           <p>&copy; {currentYear} ZyninLabs. All rights reserved.</p>
         </div>
       </div>

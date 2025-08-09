@@ -43,27 +43,23 @@ const Navbar = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 dark:from-blue-500/10 dark:via-purple-500/10 dark:to-pink-500/10" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="flex justify-between items-center py-3 md:py-5">
+        <div className="flex justify-between items-center py-3 md:py-5 ">
           {/* Enhanced Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
             <motion.div 
-              className="relative w-10 h-10 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/25 dark:shadow-blue-500/40"
+              className="relative w-[8.5rem] rounded-xl flex items-center justify-center "
               whileHover={{ 
                 scale: 1.1, 
-                rotate: 5,
-                boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
+                rotate: 5
               }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
-              <span className="text-white font-black text-lg">Z</span>
-              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl" />
+              <img 
+                src={theme === 'light' ? '/blackLogo.png' : '/whiteLogo.png'}
+                alt="ZyninLabs Logo"
+                className="w-full h-full object-contain "
+              />
             </motion.div>
-            <motion.span 
-              className="text-2xl font-black bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 dark:from-white dark:via-blue-100 dark:to-purple-100 bg-clip-text text-transparent"
-              whileHover={{ scale: 1.05 }}
-            >
-              ZyninLabs
-            </motion.span>
           </Link>
 
           {/* Enhanced Desktop Navigation */}
