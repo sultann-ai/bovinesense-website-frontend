@@ -102,12 +102,12 @@ const About = () => {
               >
                 <CustomButton
                   text="Discover Our Story"
-                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-lg"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-full "
                 />
                 <CustomButton
                   text="Meet the Team"
                   outlined={true}
-                  className="px-8 py-4 rounded-full text-lg"
+                  className="rounded-full "
                 />
               </motion.div>
             </motion.div>
@@ -243,6 +243,10 @@ const About = () => {
             </div>
           </section>
 
+
+          {/* Founders Section */}
+          <FoundersSection />
+
           {/* Journey Timeline Section */}
           {/* <OurJourney /> */}
 
@@ -267,19 +271,17 @@ const About = () => {
               <div className="flex flex-wrap justify-center gap-6">
                 <CustomButton
                   text="Start Your Journey"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-lg"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-full "
                 />
                 <CustomButton
                   text="Schedule Consultation"
                   outlined={true}
-                  className="px-12 py-5 rounded-full text-lg"
+                  className="rounded-full "
                 />
               </div>
             </motion.div>
           </CTAWrapper>
 
-          {/* Founders Section */}
-          <FoundersSection />
 
           {/* Team Section */}
           <TeamSection />

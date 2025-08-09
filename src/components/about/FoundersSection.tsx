@@ -32,8 +32,8 @@ const FoundersSection = () => {
               <div className="h-8 bg-gray-300 rounded w-1/3 mx-auto mb-4"></div>
               <div className="h-4 bg-gray-300 rounded w-1/2 mx-auto mb-8"></div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[...Array(3)].map((_, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {[...Array(4)].map((_, index) => (
                 <div key={index} className="animate-pulse">
                   <div className="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-4"></div>
                   <div className="h-4 bg-gray-300 rounded w-3/4 mx-auto mb-2"></div>
@@ -56,7 +56,7 @@ const FoundersSection = () => {
           highlightText="Founders"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {founders.map((founder, index) => (
             <FounderCard
               key={founder._id}

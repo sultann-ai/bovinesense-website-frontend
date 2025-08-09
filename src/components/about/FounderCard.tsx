@@ -14,19 +14,19 @@ const FounderCard = ({ founder, index }: FounderCardProps) => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       whileHover={{ y: -8, scale: 1.02 }}
-      className="group relative bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 p-8 rounded-3xl shadow-card dark:shadow-card-dark hover:shadow-card-hover dark:hover:shadow-card-dark-hover transition-all duration-500 border border-gray-100 dark:border-gray-700 overflow-hidden text-center"
+      className="group relative bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 p-6 rounded-3xl shadow-card dark:shadow-card-dark hover:shadow-card-hover dark:hover:shadow-card-dark-hover transition-all duration-500 border border-gray-100 dark:border-gray-700 overflow-hidden text-center"
     >
       {/* Gradient overlay on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
       
       {/* Enhanced avatar with multiple layers */}
-      <div className="relative mb-8 flex justify-center">
+      <div className="relative mb-6 flex justify-center">
         <div className="relative">
           {/* Outer glow ring */}
           <div className="absolute inset-0 bg-gradient-to-br from-primary-400 via-blue-400 to-secondary-400 rounded-full blur-lg opacity-0 group-hover:opacity-30 transition-all duration-500 scale-110"></div>
           
           {/* Main avatar container */}
-          <div className="relative w-40 h-40 rounded-full p-1 bg-gradient-to-br from-primary-500 via-blue-500 to-secondary-500 group-hover:scale-105 transition-all duration-300">
+          <div className="relative w-40 h-40 rounded-full p-1 bg-gradient-to-br from-primary-500 via-blue-500 to-secondary-500 group-hover:scale-105 transition-all duration-300 ">
             <img
               src={founder.image}
               alt={founder.name}
@@ -44,15 +44,15 @@ const FounderCard = ({ founder, index }: FounderCardProps) => {
       </div>
       
       <div className="relative z-10">
-        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
           {founder.name}
         </h3>
-        <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary-500/10 to-secondary-500/10 rounded-full mb-6">
-          <p className="text-primary-600 dark:text-primary-400 font-semibold text-sm">
+        <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary-500/10 to-secondary-500/10 rounded-full mb-3">
+          <p className="text-primary-600 dark:text-primary-400 font-semibold text-xs">
             {founder.role}
           </p>
         </div>
-        <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed line-clamp-4">
+        <p className="text-sm text-gray-600 dark:text-gray-300 mb-6 leading-relaxed line-clamp-5">
           {founder.bio}
         </p>
         
