@@ -59,7 +59,7 @@ const Hero = () => {
           className="inline-flex items-center px-4 py-2 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border border-gray-200 dark:border-slate-600 rounded-full text-primary-600 dark:text-primary-400 text-sm font-medium mb-8"
         >
           <FaStar className="mr-2 text-yellow-400" />
-          Trusted by 50+ companies worldwide
+          Trusted by many worldwide
         </motion.div>
 
         <motion.div
