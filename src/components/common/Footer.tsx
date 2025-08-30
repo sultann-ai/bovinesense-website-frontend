@@ -27,15 +27,15 @@ const Footer = () => {
               We transform ideas into innovative digital experiences.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
+              <Link to={'https://www.linkedin.com/company/zynin/'} target='_blank' className="text-gray-400 hover:text-primary-400 transition-colors">
                 <FaLinkedin size={20} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
+              </Link>
+              {/* <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
                 <FaTwitter size={20} />
               </a>
               <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
                 <FaGithub size={20} />
-              </a>
+              </a> */}
               <a href="mailto:info@zyninlabs.com" className="text-gray-400 hover:text-primary-400 transition-colors">
                 <FaEnvelope size={20} />
               </a>
@@ -59,7 +59,8 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Contact</h3>
             <ul className="space-y-2 text-gray-400">
               <li>info@zyninlabs.com</li>
-              <li>+1 (555) 123-4567</li>
+              <li>+92 317 9911776</li>
+              <li>+44 7369 213936</li>
               <li>Islamabad, Pakistan</li>
               {/* <li>Tech City, TC 12345</li> */}
             </ul>

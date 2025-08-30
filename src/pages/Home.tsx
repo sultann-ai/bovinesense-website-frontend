@@ -79,7 +79,7 @@ const Home = () => {
         <FoundersSection />
 
         {/* Partners Section */}
-        <PartnersCarousel />
+        {/* <PartnersCarousel /> */}
 
         {/* Enhanced CTA Section */}
         <CTAWrapper variant="home">

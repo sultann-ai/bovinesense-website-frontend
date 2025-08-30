@@ -7,6 +7,7 @@ import { contactService } from '../services/contactService';
 import HeroBgWrapper from '../components/common/HeroBgWrapper';
 import GradientHeading from '../components/reusables/GradientHeading';
 import CustomButton from '../components/reusables/CustomButton';
+import { Link } from 'react-router-dom';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -128,7 +129,8 @@ const Contact = () => {
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
                           Phone
                         </h3>
-                        <p className="text-gray-600 dark:text-gray-300">+1 (555) 123-4567</p>
+                        <p className="text-gray-600 dark:text-gray-300">+92 317 9911776</p>
+                        <p className="text-gray-600 dark:text-gray-300">+44 7369 213936</p>
                       </div>
                     </div>
 
@@ -153,8 +155,7 @@ const Contact = () => {
                           Address
                         </h3>
                         <p className="text-gray-600 dark:text-gray-300">
-                          123 Innovation Street<br />
-                          Tech City, TC 12345
+                          Islamabad, Pakistan
                         </p>
                       </div>
                     </div>
@@ -165,18 +166,19 @@ const Contact = () => {
                       Follow Us
                     </h3>
                     <div className="flex space-x-4">
-                      <a
-                        href="#"
+                      <Link
+                        to={'https://www.linkedin.com/company/zynin/'}
+                        target='_blank'
                         className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                       >
                         <FaLinkedin />
-                      </a>
-                      <a
+                      </Link>
+                      {/* <a
                         href="#"
                         className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                       >
                         <FaTwitter />
-                      </a>
+                      </a> */}
                     </div>
                   </div>
                 </motion.div>
