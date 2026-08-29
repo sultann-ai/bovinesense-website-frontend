@@ -36,7 +36,7 @@ const Footer = () => {
               <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
                 <FaGithub size={20} />
               </a> */}
-                  <a href="mailto:info@bovinesense.com" className="text-gray-400 hover:text-primary-400 transition-colors">
+                  <a href="mailto:info@bovinehq.com" className="text-gray-400 hover:text-primary-400 transition-colors">
                 <FaEnvelope size={20} />
               </a>
             </div>
@@ -58,9 +58,9 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact</h3>
             <ul className="space-y-2 text-gray-400">
-              <li>info@bovinesense.com</li>
-              <li>+92 317 9911776</li>
-              <li>+44 7369 213936</li>
+              <li>info@bovinehq.com</li>
+              <li>+92 307 9911776</li>
+              <li>+92 329 2775557</li>
               <li>Islamabad, Pakistan</li>
               {/* <li>Tech City, TC 12345</li> */}
             </ul>
