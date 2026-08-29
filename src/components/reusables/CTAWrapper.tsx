@@ -13,7 +13,7 @@ const CTAWrapper: React.FC<CTAWrapperProps> = ({
 }) => {
   const getBackgroundClasses = () => {
     if (variant === 'about') {
-      return "bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900";
+      return "bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-[#06101f] dark:via-[#0a1b33] dark:to-[#102746]";
     }
     return ""; // For home variant, we use the existing complex background layers
   };
@@ -23,14 +23,14 @@ const CTAWrapper: React.FC<CTAWrapperProps> = ({
       {variant === 'home' ? (
         <>
           {/* Multi-layer gradient background for home */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-primary-50 to-secondary-50 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900"></div>
-          <div className="absolute inset-0 bg-gradient-to-tl from-primary-100/50 via-transparent to-secondary-100/50 dark:from-cyan-900/50 dark:via-transparent dark:to-purple-900/50"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-white via-primary-50 to-secondary-50 dark:from-[#06101f] dark:via-[#0a1b33] dark:to-[#102746]"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-primary-100/50 via-transparent to-secondary-100/50 dark:from-[#17345a]/60 dark:via-transparent dark:to-[#0d2b4f]/50"></div>
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary-200/30 via-transparent to-transparent dark:from-blue-600/20 dark:via-transparent dark:to-transparent"></div>
           
           {/* Animated background elements */}
           <div className="absolute inset-0">
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary-300/20 to-secondary-300/20 dark:from-cyan-500/10 dark:to-blue-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-secondary-300/20 to-primary-300/20 dark:from-purple-500/10 dark:to-pink-500/10 rounded-full blur-3xl animate-bounce-slow" style={{ animationDelay: '1s' }}></div>
+            <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-secondary-300/20 to-primary-300/20 dark:from-[#17345a]/30 dark:to-[#0d2b4f]/20 rounded-full blur-3xl animate-bounce-slow" style={{ animationDelay: '1s' }}></div>
           </div>
           
           {/* Grid pattern overlay */}

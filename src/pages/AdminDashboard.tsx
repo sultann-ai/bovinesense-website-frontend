@@ -6,7 +6,7 @@ const AdminDashboard = () => {
   return (
     <>
       <Helmet>
-        <title>Admin Dashboard - ZyninLabs</title>
+        <title>Admin Dashboard - BovineSense</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaLinkedin } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import { contactService } from '../services/contactService';
 import HeroBgWrapper from '../components/common/HeroBgWrapper';
@@ -53,8 +53,8 @@ const Contact = () => {
   return (
     <>
       <Helmet>
-        <title>Contact Us - ZyninLabs</title>
-        <meta name="description" content="Get in touch with ZyninLabs for your next project. We're here to help transform your ideas into reality." />
+        <title>Contact Us - BovineSense</title>
+        <meta name="description" content="Get in touch with BovineSense for your next project. We're here to help transform your ideas into reality." />
       </Helmet>
 
       <div ref={containerRef} className="overflow-hidden">
@@ -129,8 +129,8 @@ const Contact = () => {
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
                           Phone
                         </h3>
-                        <p className="text-gray-600 dark:text-gray-300">+92 317 9911776</p>
-                        <p className="text-gray-600 dark:text-gray-300">+44 7369 213936</p>
+                        <p className="text-gray-600 dark:text-gray-300">+92 329 2775557</p>
+                        <p className="text-gray-600 dark:text-gray-300">+92 307 9911776</p>
                       </div>
                     </div>
 
@@ -142,7 +142,7 @@ const Contact = () => {
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
                           Email
                         </h3>
-                        <p className="text-gray-600 dark:text-gray-300">info@zyninlabs.com</p>
+                        <p className="text-gray-600 dark:text-gray-300">info@bovnehq.com</p>
                       </div>
                     </div>
 
@@ -167,7 +167,7 @@ const Contact = () => {
                     </h3>
                     <div className="flex space-x-4">
                       <Link
-                        to={'https://www.linkedin.com/company/zynin/'}
+                        to={'https://www.linkedin.com/company/bovinesense/'}
                         target='_blank'
                         className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                       >

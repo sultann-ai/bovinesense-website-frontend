@@ -4,6 +4,7 @@ export interface Founder {
   role: string;
   bio: string;
   image: string;
+  section?: 'trusted' | 'recognitions';
   linkedin?: string;
   twitter?: string;
   email: string;
@@ -46,6 +47,15 @@ export interface Partner {
   website: string;
   createdAt: Date;
   updatedAt: Date; 
+}
+
+export interface Recognition {
+  _id: string;
+  name: string;
+  image: string;
+  website?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Project {

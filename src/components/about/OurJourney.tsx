@@ -85,7 +85,7 @@ const OurJourney = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
-            From vision to reality - the milestones that shaped ZyninLabs
+            From vision to reality - the milestones that shaped BovineSense
           </p>
         </motion.div>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { UseFormRegister, FieldError, RegisterOptions } from 'react-hook-form';
+import { UseFormRegister, UseFormRegisterReturn, FieldError, RegisterOptions } from 'react-hook-form';
 
 interface FormInputProps {
   label: string;
@@ -11,7 +11,7 @@ interface FormInputProps {
   rows?: number;
   multiline?: boolean;
   className?: string;
-  register?: UseFormRegister<any>;
+  register?: UseFormRegister<any> | UseFormRegisterReturn;
   error?: FieldError;
   validation?: RegisterOptions;
   // For non-react-hook-form usage
@@ -48,9 +48,9 @@ const FormInput = React.forwardRef<
     ...(required ? { required: `${label} is required` } : {})
   };
 
-  const registerProps = register 
+  const registerProps = typeof register === 'function'
     ? register(id, finalValidationRules)
-    : {};
+    : register || {};
 
   const inputProps = register 
     ? registerProps

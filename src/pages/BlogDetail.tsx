@@ -76,7 +76,7 @@ const BlogDetail = () => {
   return (
     <>
       <Helmet>
-        <title>{post.title} - ZyninLabs Blog</title>
+        <title>{post.title} - BovineSense Blog</title>
         <meta name="description" content={post.excerpt} />
       </Helmet>
 

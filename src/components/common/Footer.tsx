@@ -17,7 +17,7 @@ const Footer = () => {
               <div className="w-[8.5rem] rounded-lg flex items-center justify-center">
                 <img 
                   src={'/whiteLogo.png'}
-                  alt="ZyninLabs Logo"
+                  alt="BovineSense Logo"
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -36,7 +36,7 @@ const Footer = () => {
               <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
                 <FaGithub size={20} />
               </a> */}
-              <a href="mailto:info@zyninlabs.com" className="text-gray-400 hover:text-primary-400 transition-colors">
+                  <a href="mailto:info@bovinesense.com" className="text-gray-400 hover:text-primary-400 transition-colors">
                 <FaEnvelope size={20} />
               </a>
             </div>
@@ -58,7 +58,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact</h3>
             <ul className="space-y-2 text-gray-400">
-              <li>info@zyninlabs.com</li>
+              <li>info@bovinesense.com</li>
               <li>+92 317 9911776</li>
               <li>+44 7369 213936</li>
               <li>Islamabad, Pakistan</li>
@@ -68,7 +68,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-800 mt-8n pt-8 text-center text-gray-400">
-          <p>&copy; {currentYear} ZyninLabs. All rights reserved.</p>
+          <p>&copy; {currentYear} BovineSense. All rights reserved.</p>
         </div>
       </div>
     </footer>

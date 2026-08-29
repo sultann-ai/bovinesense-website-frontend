@@ -52,7 +52,7 @@ const AdminLogin = () => {
   return (
     <>
       <Helmet>
-        <title>Admin Login - ZyninLabs</title>
+        <title>Admin Login - BovineSense</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 

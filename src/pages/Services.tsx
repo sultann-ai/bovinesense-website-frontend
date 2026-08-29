@@ -63,8 +63,8 @@ const Services = () => {
   return (
     <>
       <Helmet>
-        <title>Our Services - ZyninLabs</title>
-        <meta name="description" content="Comprehensive AI-powered solutions and custom software development services by ZyninLabs." />
+        <title>Our Services - BovineSense</title>
+        <meta name="description" content="Comprehensive AI-powered solutions and custom software development services by BovineSense." />
       </Helmet>
 
       <div ref={containerRef} className="overflow-hidden">

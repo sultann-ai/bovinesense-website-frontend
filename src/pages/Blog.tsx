@@ -57,8 +57,8 @@ const Blog = () => {
   return (
     <>
       <Helmet>
-        <title>Blog - ZyninLabs</title>
-        <meta name="description" content="Stay updated with the latest insights, tutorials, and news from ZyninLabs." />
+        <title>Blog - BovineSense</title>
+        <meta name="description" content="Stay updated with the latest insights, tutorials, and news from BovineSense." />
       </Helmet>
 
       <div ref={containerRef} className="overflow-hidden">

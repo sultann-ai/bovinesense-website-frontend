@@ -10,28 +10,29 @@ import SectionHeading from '../components/reusables/SectionHeading';
 import ValueCard from '../components/reusables/ValueCard';
 import CustomButton from '../components/reusables/CustomButton';
 import CTAWrapper from '../components/reusables/CTAWrapper';
+import { FaMicrochip, FaTag, FaHeartbeat } from 'react-icons/fa';
 
 const featuresData = [
   {
-    title: 'Expert Development',
-    description: 'Full-stack expertise in modern technologies and frameworks',
-    icon: <FaCode className="w-8 h-8" />,
+    title: 'Smart Neck Straps',
+    description: 'Rugged, IP67-rated IoT collars delivering real-time vitals, GPS anti-theft tracking, and instant alerts.',
+    icon: <FaMicrochip className="w-8 h-8" />,
     gradient: 'from-blue-500 to-cyan-500',
     bgGradient: 'from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20'
   },
   {
-    title: 'AI-Powered Solutions',
-    description: 'Leveraging artificial intelligence to solve complex problems',
-    icon: <FaBrain className="w-8 h-8" />,
-    gradient: 'from-purple-500 to-pink-500',
-    bgGradient: 'from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20'
-  },
-  {
-    title: 'Scalable Architecture',
-    description: 'Building solutions that grow with your business needs',
-    icon: <FaRocket className="w-8 h-8" />,
+    title: 'Intelligent Ear Tags',
+    description: 'Lightweight, durable biometric tags designed for seamless herd identification and localized management.',
+    icon: <FaTag className="w-8 h-8" />,
     gradient: 'from-emerald-500 to-teal-500',
     bgGradient: 'from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20'
+  },
+  {
+    title: 'AI Health Analytics',
+    description: 'Cloud-based predictive algorithms that analyze hardware data to detect illness early and protect your livestock.',
+    icon: <FaHeartbeat className="w-8 h-8" />,
+    gradient: 'from-purple-500 to-pink-500',
+    bgGradient: 'from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20'
   }
 ];
 
@@ -39,7 +40,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>ZyninLabs - AI-Powered Software Solutions</title>
+        <title>BovineSense</title>
         <meta name="description" content="Leading software company specializing in AI-powered solutions, custom development, and innovative digital experiences." />
       </Helmet>
 
@@ -51,9 +52,9 @@ const Home = () => {
         <section className="py-20 ">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading 
-              title="Why Choose ZyninLabs?"
+              title="Why Choose BovineSense?"
               tagline="We combine cutting-edge technology with creative innovation to deliver exceptional results"
-              highlightText="ZyninLabs"
+              highlightText="BovineSense"
             />
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -91,14 +92,14 @@ const Home = () => {
           >
             {/* Glowing badge */}
             <div className="inline-flex items-center px-6 py-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200 dark:border-gray-600 rounded-full text-primary-600 dark:text-primary-400 text-sm font-medium">
-              ✨ Transform Your Business Today
+              ✨ Transform Your Herd Today
             </div>
             
             <GradientHeading 
               highlightText="Transform" 
               className="text-2xl md:text-3xl lg:text-4xl mb-6"
             >
-              Ready to Transform Your Ideas?
+              Ready to Transform Your Dairy Business?
             </GradientHeading>
             
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">

@@ -56,7 +56,7 @@ const Products = () => {
   return (
     <>
       <Helmet>
-        <title>Our Products - ZyninLabs</title>
+        <title>Our Products - BovineSense</title>
         <meta name="description" content="Discover our innovative products and software solutions." />
       </Helmet>
 

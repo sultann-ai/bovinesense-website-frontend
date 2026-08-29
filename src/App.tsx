@@ -28,10 +28,12 @@ import AdminProducts from './components/admin/products/AdminProducts';
 import AdminBlog from './components/admin/blog/AdminBlog';
 import AdminContacts from './components/admin/contacts/AdminContacts';
 import AdminPartners from './components/admin/partners/AdminPartners';
+import AdminRecognitions from './components/admin/recognitions/AdminRecognitions';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import './styles/globals.css';
 import CustomBgWrapper from './components/reusables/CustomBgWrapper';
 import { useLenis } from 'lenis/react';
+import Recognitions from './pages/Recognitions';
 
 // Component to handle scroll to top on route changes
 function ScrollToTop() {
@@ -68,6 +70,7 @@ function App() {
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/blog/:slug" element={<BlogDetail />} />
+                    <Route path="/recognitions" element={<Recognitions />} />
                     <Route path="/admin-login" element={<AdminLogin />} />
                     
                     {/* Admin Routes */}
@@ -87,6 +90,7 @@ function App() {
                       <Route path="blog" element={<AdminBlog />} />
                       <Route path="contacts" element={<AdminContacts />} />
                       <Route path="partners" element={<AdminPartners />} />
+                      <Route path="recognitions" element={<AdminRecognitions />} />
                       {/* Redirect /admin to /admin/founders by default */}
                       <Route index element={<AdminFounders />} />
                     </Route>

@@ -7,7 +7,7 @@ interface HeroBgWrapperProps {
 
 const HeroBgWrapper: React.FC<HeroBgWrapperProps> = ({ children, className = "" }) => {
   return (
-    <section className={`relative min-h-[65vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-primary-50 to-secondary-50 dark:from-gray-950 dark:via-slate-900 dark:to-gray-900 ${className}`}>
+    <section className={`relative min-h-[65vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-primary-50 to-secondary-50 dark:from-[#06101f] dark:via-[#0a1b33] dark:to-[#102746] ${className}`}>
       {/* Enhanced animated background elements */}
      <div className="absolute inset-0 bg-mesh-gradient opacity-30 dark:opacity-20"></div>
       

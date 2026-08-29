@@ -11,21 +11,82 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+/* Dark mode uses one navy family across page surfaces, cards, menus, and forms. */
+.dark body {
+  background-color: #071426;
+  color: #e2e8f0;
+}
+
+.dark .dark\:bg-gray-950 {
+  background-color: #06101f !important;
+}
+
+.dark .dark\:bg-gray-900 {
+  background-color: #0a1b33 !important;
+}
+
+.dark .dark\:bg-gray-800 {
+  background-color: #102746 !important;
+}
+
+.dark .dark\:bg-gray-700 {
+  background-color: #17345a !important;
+}
+
+.dark .dark\:bg-gray-600 {
+  background-color: #23456f !important;
+}
+
+.dark .dark\:border-gray-700 {
+  border-color: #1b3a61 !important;
+}
+
+.dark .dark\:border-gray-600 {
+  border-color: #2b527e !important;
+}
+
+.dark .dark\:text-gray-300 {
+  color: #cbd5e1 !important;
+}
+
+.dark .dark\:text-gray-400 {
+  color: #9fb3ca !important;
+}
+
+.dark .dark\:text-gray-500 {
+  color: #7892af !important;
+}
+
+/* Dark mode stays solid navy; gradient text becomes a readable solid blue. */
+.dark [class*="bg-gradient"],
+.dark [class*="bg-[linear-gradient"],
+.dark [class*="bg-[radial-gradient"] {
+  background-image: none !important;
+}
+
+.dark [class*="bg-clip-text"] {
+  background-image: none !important;
+  background-clip: border-box !important;
+  -webkit-background-clip: border-box !important;
+  color: #bfdbfe !important;
+  -webkit-text-fill-color: #bfdbfe !important;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
+  @apply bg-gray-100 dark:bg-gray-900;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  @apply bg-gray-300 dark:bg-gray-500 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-500;
+  @apply bg-gray-400 dark:bg-gray-400;
 }
 
 /* Smooth scrolling */

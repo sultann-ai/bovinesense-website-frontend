@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { FaUsers, FaServicestack, FaProjectDiagram, FaNewspaper, FaEnvelope, FaHandshake } from 'react-icons/fa';
+import { FaUsers, FaServicestack, FaProjectDiagram, FaNewspaper, FaEnvelope, FaHandshake, FaAward } from 'react-icons/fa';
 import { useAdmin } from '../../contexts/AdminContext';
 import AdminHeader from './AdminHeader';
 import AdminSidebar from './AdminSidebar';
@@ -25,7 +25,8 @@ const AdminDashboardLayout = () => {
     { id: 'products', label: 'Products', icon: FaProjectDiagram, path: '/admin/products' },
     { id: 'blog', label: 'Blog', icon: FaNewspaper, path: '/admin/blog' },
     { id: 'contacts', label: 'Contacts', icon: FaEnvelope, path: '/admin/contacts' },
-    { id: 'partners', label: 'Partners', icon: FaHandshake, path: '/admin/partners' }
+    { id: 'partners', label: 'Partners', icon: FaHandshake, path: '/admin/partners' },
+    { id: 'recognitions', label: 'Recognitions', icon: FaAward, path: '/admin/recognitions' }
   ];
 
   // Get active tab from current location

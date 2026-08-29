@@ -56,7 +56,7 @@ const Work = () => {
   return (
     <>
       <Helmet>
-        <title>Our Work - ZyninLabs</title>
+        <title>Our Work - BovineSense</title>
         <meta name="description" content="Explore our portfolio of innovative projects and successful client solutions." />
       </Helmet>
 
