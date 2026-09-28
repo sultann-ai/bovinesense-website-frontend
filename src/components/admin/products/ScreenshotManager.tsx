@@ -67,10 +67,10 @@ const ScreenshotManager: React.FC<ScreenshotManagerProps> = ({
   return (
     <div className="space-y-4">
       {/* Upload Section */}
-      <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+      <div className="border-2 border-dashed border-hairline rounded-card p-4">
         <div className="text-center">
-          <Upload className="mx-auto h-8 w-8 text-gray-400 mb-2" />
-          <p className="text-sm text-gray-600 mb-3">
+          <Upload className="mx-auto h-8 w-8 text-ink mb-2" />
+          <p className="text-sm text-ink mb-3">
             Add new screenshots to the gallery
           </p>
           
@@ -95,7 +95,7 @@ const ScreenshotManager: React.FC<ScreenshotManagerProps> = ({
             </Button>
             
             {selectedFiles && selectedFiles.length > 0 && (
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-ink">
                 {selectedFiles.length} file(s) selected
               </div>
             )}
@@ -116,12 +116,12 @@ const ScreenshotManager: React.FC<ScreenshotManagerProps> = ({
 
       {/* Current Screenshots */}
       <div>
-        <h3 className="text-sm font-medium text-gray-700 mb-3">
+        <h3 className="text-sm font-medium text-ink mb-3">
           Current Screenshots ({screenshots.length})
         </h3>
         
         {screenshots.length === 0 ? (
-          <p className="text-sm text-gray-500 text-center py-8 border rounded-lg bg-gray-50">
+          <p className="text-sm text-ink text-center py-8 border rounded-card bg-cream-deep">
             No screenshots yet. Upload some images to get started.
           </p>
         ) : (
@@ -129,7 +129,7 @@ const ScreenshotManager: React.FC<ScreenshotManagerProps> = ({
             {screenshots.map((screenshot, index) => (
               <div 
                 key={index} 
-                className="flex items-center gap-3 p-3 border rounded-lg bg-gray-50"
+                className="flex items-center gap-3 p-3 border rounded-card bg-cream-deep"
               >
                 <img
                   src={screenshot}
@@ -138,10 +138,10 @@ const ScreenshotManager: React.FC<ScreenshotManagerProps> = ({
                 />
                 
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-gray-900 truncate">
+                  <p className="text-sm text-charcoal truncate">
                     Screenshot {index + 1}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-ink">
                     Position: {index + 1}
                   </p>
                 </div>
@@ -149,13 +149,13 @@ const ScreenshotManager: React.FC<ScreenshotManagerProps> = ({
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => window.open(screenshot, '_blank')}
-                    className="text-blue-600 hover:text-blue-800 text-xs"
+                    className="text-charcoal hover:text-terracotta text-xs"
                   >
                     View
                   </button>
                   <button
                     onClick={() => handleRemove(index)}
-                    className="p-1 text-red-600 hover:bg-red-50 rounded transition-colors"
+                    className="p-1 text-danger hover:bg-cream-deep rounded transition-colors"
                     title="Remove screenshot"
                   >
                     <Trash2 size={14} />
@@ -168,7 +168,7 @@ const ScreenshotManager: React.FC<ScreenshotManagerProps> = ({
       </div>
 
       {/* Info */}
-      <div className="text-xs text-gray-500 bg-blue-50 p-3 rounded">
+      <div className="text-xs text-ink bg-cream-deep p-3 rounded-card">
         <p className="font-medium mb-1">Screenshot Management Tips:</p>
         <ul className="space-y-1">
           <li>• Screenshots are displayed in the order they appear here</li>

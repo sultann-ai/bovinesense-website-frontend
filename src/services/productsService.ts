@@ -1,49 +1,19 @@
-import axios from 'axios';
+import { api } from './apiClient';
 import { Product } from '../types';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-
-// Create axios instance with interceptors for protected routes
-const api = axios.create({
-  baseURL: API_URL,
-});
-
-// Add auth token to requests
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('admin_token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-// Handle auth errors
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('admin_token');
-      if (!window.location.pathname.includes('/admin-login')) {
-        window.location.href = '/admin-login';
-      }
-    }
-    return Promise.reject(error);
-  }
-);
 
 export const productsService = {
   async getAll(): Promise<Product[]> {
-    const response = await axios.get(`${API_URL}/products`);
+    const response = await api.get('/products');
     return response.data;
   },
 
   async getById(id: string): Promise<Product> {
-    const response = await axios.get(`${API_URL}/products/${id}`);
+    const response = await api.get(`/products/${id}`);
     return response.data;
   },
 
   async getBySlug(slug: string): Promise<Product> {
-    const response = await axios.get(`${API_URL}/products/slug/${slug}`);
+    const response = await api.get(`/products/slug/${slug}`);
     return response.data;
   },
 
@@ -70,7 +40,7 @@ export const productsService = {
   },
 
   async getScreenshots(id: string): Promise<{ screenshots: string[] }> {
-    const response = await axios.get(`${API_URL}/products/${id}/screenshots`);
+    const response = await api.get(`/products/${id}/screenshots`);
     return response.data;
   },
 

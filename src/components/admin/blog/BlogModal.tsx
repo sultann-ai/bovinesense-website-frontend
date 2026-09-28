@@ -164,32 +164,32 @@ const BlogModal: React.FC<BlogModalProps> = ({ isOpen, onClose, onSuccess, blog 
         />
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-ink mb-2">
             Excerpt
           </label>
           <textarea
             {...register('excerpt', { required: 'Excerpt is required' })}
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-hairline rounded-[14px]    "
             placeholder="Brief description of the blog post..."
           />
           {errors.excerpt && (
-            <p className="mt-1 text-sm text-red-600">{errors.excerpt.message}</p>
+            <p className="mt-1 text-sm text-danger">{errors.excerpt.message}</p>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-ink mb-2">
             Content
           </label>
           <textarea
             {...register('content', { required: 'Content is required' })}
             rows={8}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-hairline rounded-[14px]    "
             placeholder="Full blog post content..."
           />
           {errors.content && (
-            <p className="mt-1 text-sm text-red-600">{errors.content.message}</p>
+            <p className="mt-1 text-sm text-danger">{errors.content.message}</p>
           )}
         </div>
 
@@ -207,7 +207,7 @@ const BlogModal: React.FC<BlogModalProps> = ({ isOpen, onClose, onSuccess, blog 
               {...register('published')}
               className="mr-2"
             />
-            <span className="text-sm font-medium text-gray-700">Published</span>
+            <span className="text-sm font-medium text-ink">Published</span>
           </label>
 
           <label className="flex items-center">
@@ -216,7 +216,7 @@ const BlogModal: React.FC<BlogModalProps> = ({ isOpen, onClose, onSuccess, blog 
               {...register('featured')}
               className="mr-2"
             />
-            <span className="text-sm font-medium text-gray-700">Featured</span>
+            <span className="text-sm font-medium text-ink">Featured</span>
           </label>
         </div>
 

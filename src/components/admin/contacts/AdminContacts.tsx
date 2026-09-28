@@ -9,7 +9,7 @@ const AdminContacts = () => {
     return (
       <div className="text-center py-8">
         <LoadingSpinner size="lg" className="mx-auto mb-4" />
-        <p className="text-gray-600 dark:text-gray-300">Loading contact submissions...</p>
+        <p className="text-ink ">Loading contact submissions...</p>
       </div>
     );
   }
@@ -17,14 +17,14 @@ const AdminContacts = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+        <h2 className="text-xl font-semibold text-charcoal ">
           Contact Submissions ({contacts.length})
         </h2>
       </div>
 
       {contacts.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-600 dark:text-gray-300 text-lg">
+          <p className="text-ink text-lg">
             No contact submissions yet.
           </p>
         </div>

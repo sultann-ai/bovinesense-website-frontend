@@ -14,18 +14,18 @@ const ProjectCard = ({ project, onEdit, onDelete, isDeleting }: ProjectCardProps
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`bg-gray-50 dark:bg-gray-700 rounded-lg overflow-hidden relative ${
+      className={`bg-cream-deep rounded-card overflow-hidden relative ${
         isDeleting ? 'opacity-50 pointer-events-none' : ''
       }`}
     >
       {isDeleting && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white dark:bg-gray-800 bg-opacity-75 rounded-lg z-10">
-          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-red-600"></div>
+        <div className="absolute inset-0 flex items-center justify-center bg-cream bg-opacity-75 rounded-card z-10">
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-danger"></div>
         </div>
       )}
       
       {/* Project Image */}
-      <div className="w-full h-48 bg-gray-200 dark:bg-gray-600">
+      <div className="w-full h-48 bg-cream-deep ">
         <img
           src={project.image}
           alt={project.title}
@@ -34,11 +34,11 @@ const ProjectCard = ({ project, onEdit, onDelete, isDeleting }: ProjectCardProps
       </div>
 
       <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+        <h3 className="text-lg font-semibold text-charcoal mb-2">
           {project.title}
         </h3>
         
-        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">
+        <p className="text-ink text-sm mb-4 line-clamp-3">
           {project.description}
         </p>
 
@@ -49,13 +49,13 @@ const ProjectCard = ({ project, onEdit, onDelete, isDeleting }: ProjectCardProps
               {project.technologies.slice(0, 3).map((tech, index) => (
                 <span
                   key={index}
-                  className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded"
+                  className="inline-block border border-hairline text-ink text-xs px-2 py-1 rounded"
                 >
                   {tech}
                 </span>
               ))}
               {project.technologies.length > 3 && (
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+                <span className="text-xs text-ink ">
                   +{project.technologies.length - 3} more
                 </span>
               )}
@@ -70,13 +70,13 @@ const ProjectCard = ({ project, onEdit, onDelete, isDeleting }: ProjectCardProps
               {project.tags.slice(0, 2).map((tag, index) => (
                 <span
                   key={index}
-                  className="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs px-2 py-1 rounded"
+                  className="inline-block border border-hairline text-ink text-xs px-2 py-1 rounded"
                 >
                   {tag}
                 </span>
               ))}
               {project.tags.length > 2 && (
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+                <span className="text-xs text-ink ">
                   +{project.tags.length - 2} more
                 </span>
               )}
@@ -92,7 +92,7 @@ const ProjectCard = ({ project, onEdit, onDelete, isDeleting }: ProjectCardProps
                 href={project.liveDemoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 p-1 transition-colors"
+                className="text-charcoal hover:text-terracotta p-1 transition-colors"
                 title="Live Demo"
               >
                 <FaExternalLinkAlt size={14} />
@@ -103,7 +103,7 @@ const ProjectCard = ({ project, onEdit, onDelete, isDeleting }: ProjectCardProps
                 href={project.githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-gray-800 p-1 transition-colors"
+                className="text-ink hover:text-charcoal p-1 transition-colors"
                 title="GitHub"
               >
                 <FaGithub size={14} />
@@ -116,7 +116,7 @@ const ProjectCard = ({ project, onEdit, onDelete, isDeleting }: ProjectCardProps
         <div className="flex justify-center space-x-2">
           <button
             onClick={() => onEdit(project)}
-            className="text-blue-600 hover:text-blue-800 p-2 transition-colors"
+            className="text-charcoal hover:text-terracotta p-2 transition-colors"
             title="Edit project"
             disabled={isDeleting}
           >
@@ -124,7 +124,7 @@ const ProjectCard = ({ project, onEdit, onDelete, isDeleting }: ProjectCardProps
           </button>
           <button
             onClick={() => onDelete(project._id)}
-            className="text-red-600 hover:text-red-800 p-2 transition-colors"
+            className="text-danger hover:text-danger p-2 transition-colors"
             title="Delete project"
             disabled={isDeleting}
           >

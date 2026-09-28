@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import HeroBgWrapper from '../components/common/HeroBgWrapper';
 import { recognitionsService } from '../services/recognitionsService';
 import { Recognition } from '../types';
+import Img from '../components/ui/Img';
 
 const Recognitions = () => {
   const [recognitions, setRecognitions] = useState<Recognition[]>([]);
@@ -50,7 +51,7 @@ const Recognitions = () => {
               {trustedRecognitions.map((recognition) => {
                 const content = (
                   <div className="h-40 p-6 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl flex flex-col items-center justify-center gap-4 hover:border-primary-500 transition-colors">
-                    <img src={recognition.image} alt={recognition.name} className="max-h-20 max-w-full object-contain" />
+                    <Img src={recognition.image} alt={recognition.name} width={200} height={80} widths={[200, 400]} sizes="200px" className="h-20 w-full max-w-[200px] object-contain" />
                     <span className="text-sm font-medium text-center text-gray-700 dark:text-gray-300">{recognition.name}</span>
                   </div>
                 );
@@ -73,7 +74,7 @@ const Recognitions = () => {
               {eventRecognitions.map((recognition) => {
                 const content = (
                   <div className="h-full overflow-hidden bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl hover:border-primary-500 transition-colors">
-                    <img src={recognition.image} alt={recognition.name} className="w-full aspect-[4/3] object-cover" />
+                    <Img src={recognition.image} alt={recognition.name} width={800} height={600} sizes="(min-width: 768px) 33vw, 100vw" className="w-full aspect-[4/3] object-cover" />
                     <div className="p-5">
                       <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{recognition.name}</h3>
                     </div>

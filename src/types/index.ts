@@ -53,6 +53,8 @@ export interface Recognition {
   _id: string;
   name: string;
   image: string;
+  /** Backend enum; defaults to 'trusted' (docs/BACKEND.md §8.8). */
+  section?: 'trusted' | 'recognitions';
   website?: string;
   createdAt: Date;
   updatedAt: Date;

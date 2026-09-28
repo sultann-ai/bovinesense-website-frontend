@@ -1,21 +1,19 @@
-import axios from 'axios';
+import { api } from './apiClient';
 import { Project } from '../types';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 export const projectsService = {
   async getAll(): Promise<Project[]> {
-    const response = await axios.get(`${API_URL}/projects`);
+    const response = await api.get('/projects');
     return response.data;
   },
 
   async getById(id: string): Promise<Project> {
-    const response = await axios.get(`${API_URL}/projects/${id}`);
+    const response = await api.get(`/projects/${id}`);
     return response.data;
   },
 
   async create(formData: FormData): Promise<Project> {
-    const response = await axios.post(`${API_URL}/projects`, formData, {
+    const response = await api.post('/projects', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -24,7 +22,7 @@ export const projectsService = {
   },
 
   async update(id: string, formData: FormData): Promise<Project> {
-    const response = await axios.put(`${API_URL}/projects/${id}`, formData, {
+    const response = await api.put(`/projects/${id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -33,6 +31,6 @@ export const projectsService = {
   },
 
   async delete(id: string): Promise<void> {
-    await axios.delete(`${API_URL}/projects/${id}`);
+    await api.delete(`/projects/${id}`);
   }
 };

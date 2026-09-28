@@ -1,21 +1,19 @@
-import axios from 'axios';
+import { api } from './apiClient';
 import { TeamMember } from '../types';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 export const teamService = {
   async getAll(): Promise<TeamMember[]> {
-    const response = await axios.get(`${API_URL}/team`);
+    const response = await api.get('/team');
     return response.data;
   },
 
   async getById(id: string): Promise<TeamMember> {
-    const response = await axios.get(`${API_URL}/team/${id}`);
+    const response = await api.get(`/team/${id}`);
     return response.data;
   },
 
   async create(formData: FormData): Promise<TeamMember> {
-    const response = await axios.post(`${API_URL}/team`, formData, {
+    const response = await api.post('/team', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -24,7 +22,7 @@ export const teamService = {
   },
 
   async update(id: string, formData: FormData): Promise<TeamMember> {
-    const response = await axios.put(`${API_URL}/team/${id}`, formData, {
+    const response = await api.put(`/team/${id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -33,6 +31,6 @@ export const teamService = {
   },
 
   async delete(id: string): Promise<void> {
-    await axios.delete(`${API_URL}/team/${id}`);
+    await api.delete(`/team/${id}`);
   }
 };

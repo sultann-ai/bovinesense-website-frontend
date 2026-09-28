@@ -154,17 +154,17 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, onSuccess,
         />
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-ink mb-2">
             Full Description
           </label>
           <textarea
             {...register('fullDescription', { required: 'Full description is required' })}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-hairline rounded-[14px]    "
             placeholder="Detailed product description..."
           />
           {errors.fullDescription && (
-            <p className="mt-1 text-sm text-red-600">{errors.fullDescription.message}</p>
+            <p className="mt-1 text-sm text-danger">{errors.fullDescription.message}</p>
           )}
         </div>
 
@@ -202,7 +202,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, onSuccess,
         />
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-ink mb-2">
             Screenshots (multiple files)
           </label>
           <input
@@ -210,9 +210,9 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, onSuccess,
             multiple
             accept="image/*"
             {...register('screenshots')}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-hairline rounded-[14px]    "
           />
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-ink">
             Select multiple images for the product gallery
           </p>
         </div>

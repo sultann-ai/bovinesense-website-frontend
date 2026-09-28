@@ -1,35 +1,4 @@
-import axios from 'axios';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-
-// Create axios instance with interceptors
-const api = axios.create({
-  baseURL: API_URL,
-});
-
-// Add auth token to requests
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('admin_token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-// Handle auth errors
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('admin_token');
-      // Don't redirect here if we're already on the login page
-      if (!window.location.pathname.includes('/admin-login')) {
-        window.location.href = '/admin-login';
-      }
-    }
-    return Promise.reject(error);
-  }
-);
+import { api } from './apiClient';
 
 export const adminService = {
   async login(username: string, password: string): Promise<{ token: string; admin: any }> {

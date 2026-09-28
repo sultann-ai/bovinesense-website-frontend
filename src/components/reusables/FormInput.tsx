@@ -38,9 +38,10 @@ const FormInput = React.forwardRef<
   value,
   onChange
 }, ref) => {
-  const baseInputClasses = `w-full px-3 py-2 border ${
-    error ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
-  } rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white`;
+  // UI-kit input on cream: hairline border, 14px radius, terracotta border on focus.
+  const baseInputClasses = `w-full px-4 py-3 border ${
+    error ? 'border-danger' : 'border-hairline'
+  } rounded-[14px] bg-cream text-body text-charcoal placeholder:text-ink focus:border-terracotta disabled:opacity-60`;
 
   // Combine default validation with custom validation
   const finalValidationRules: RegisterOptions = {
@@ -58,9 +59,9 @@ const FormInput = React.forwardRef<
 
   return (
     <div className={className}>
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+      <label htmlFor={id} className="block text-small font-semibold text-charcoal mb-2">
         {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
+        {required && <span className="text-danger ml-1">*</span>}
       </label>
       {multiline ? (
         <textarea
@@ -84,7 +85,7 @@ const FormInput = React.forwardRef<
         />
       )}
       {error && (
-        <p className="text-red-500 text-xs mt-1">{error.message}</p>
+        <p className="text-danger text-small mt-2">{error.message}</p>
       )}
     </div>
   );

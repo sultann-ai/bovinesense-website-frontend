@@ -21,13 +21,14 @@ const Button = ({
   onClick,
   type = 'button'
 }: ButtonProps) => {
-  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors focus:ring-2 focus:ring-offset-2';
-  
+  // Admin-only legacy button, restyled to the UI kit tokens (API unchanged).
+  const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-pill transition-colors duration-150';
+
   const variantClasses = {
-    primary: 'bg-primary-600 hover:bg-primary-700 text-white focus:ring-primary-500',
-    secondary: 'bg-gray-600 hover:bg-gray-700 text-white focus:ring-gray-500',
-    danger: 'bg-red-600 hover:bg-red-700 text-white focus:ring-red-500',
-    ghost: 'bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600'
+    primary: 'bg-terracotta hover:bg-terracotta-deep text-white',
+    secondary: 'bg-transparent hover:bg-cream-deep text-ink border border-hairline',
+    danger: 'bg-danger hover:opacity-90 text-white',
+    ghost: 'bg-transparent hover:bg-cream-deep text-ink border border-hairline'
   };
 
   const sizeClasses = {

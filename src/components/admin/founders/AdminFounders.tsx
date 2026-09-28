@@ -32,7 +32,7 @@ const AdminFounders = () => {
     return (
       <div className="text-center py-8">
         <LoadingSpinner size="lg" className="mx-auto mb-4" />
-        <p className="text-gray-600 dark:text-gray-300">Loading founders...</p>
+        <p className="text-ink ">Loading founders...</p>
       </div>
     );
   }
@@ -40,7 +40,7 @@ const AdminFounders = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+        <h2 className="text-xl font-semibold text-charcoal ">
           Founders ({founders.length})
         </h2>
         <Button

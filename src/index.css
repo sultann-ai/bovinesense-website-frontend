@@ -2,59 +2,446 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   Bovine design foundation — the single global stylesheet.
+   Font: Inter Variable, self-hosted via @fontsource-variable/inter (main.tsx).
+   ========================================================================== */
+
+/* Metric-matched fallback for Inter, used only until the web font loads, so the
+   font swap does not reflow text (layout shift). Values measured in Chrome against
+   @fontsource-variable/inter (ascent 0.969em, descent 0.241em):
+   regular width ratio vs Arial 1.0673, bold width ratio vs Arial Bold 1.0256.
+   A real bold face is declared so the browser doesn't synthesise a (narrower) fake bold. */
+@font-face {
+  font-family: 'Inter Fallback';
+  font-weight: 100 549;
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 106.73%;
+  ascent-override: 90.76%;
+  descent-override: 22.6%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  font-weight: 550 900;
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  size-adjust: 102.56%;
+  ascent-override: 94.46%;
+  descent-override: 23.52%;
+  line-gap-override: 0%;
+}
+
 @layer base {
-  * {
-    font-family: 'Poppins', sans-serif;
+  :root {
+    /* Brand palette — the only colors allowed (plus white, black and the glass rgba). */
+    --terracotta: #C1502E;
+    --terracotta-deep: #A84224; /* hover state for terracotta */
+    --cream: #F6F1E9;
+    --cream-deep: #EDE6DA;
+    --charcoal: #2B2A28;
+    --charcoal-soft: #3A3835;
+    --ink: #3A3733;
+    --gold: #D9A441;
+    --white: #FFFFFF;
+
+    /* Admin only: destructive actions. Not a brand color; never use on public pages. */
+    --danger: #B3261E;
+
+    /* Fluid type scale: min at 360px viewport, max at 1280px viewport. */
+    --fs-hero: clamp(2.375rem, 1.5435rem + 3.6957vw, 4.5rem);   /* 38px -> 72px */
+    --fs-h2: clamp(1.875rem, 1.5326rem + 1.5217vw, 2.75rem);    /* 30px -> 44px */
+    --fs-h3: clamp(1.1875rem, 1.1141rem + 0.3261vw, 1.375rem);  /* 19px -> 22px */
+    --fs-body: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);     /* 16px -> 18px */
+    --fs-small: 0.875rem;                                        /* 14px */
+
+    /* Shape */
+    --radius-pill: 9999px;
+    --radius-card: 20px;
+    --radius-panel: 40px;
+    --radius-image: 16px;
+
+    /* Spacing */
+    --space: 8px;                                                  /* base unit */
+    --section-pad: clamp(4rem, 2.8261rem + 5.2174vw, 7rem);       /* 64px -> 112px */
+    --container-max: 1200px;
+    --container-pad: 20px;
+
+    /* Offset so the floating nav never covers an anchored heading. */
+    --nav-offset: 96px;
   }
-  
+
+  @media (min-width: 768px) {
+    :root {
+      --container-pad: 32px;
+    }
+  }
+
+  html {
+    font-family: "Inter Variable", "Inter Fallback", sans-serif;
+  }
+
   body {
-    font-family: 'Poppins', sans-serif;
+    background-color: var(--cream);
+    color: var(--ink);
+    font-size: var(--fs-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Smooth scroll only when the user has not asked for reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Lenis drives scrolling itself; native smooth scroll must be off while it is active. */
+  html.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  section,
+  [id] {
+    scroll-margin-top: var(--nav-offset);
+  }
+
+  /* Focus ring on every interactive element. */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  summary:focus-visible,
+  [tabindex]:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid var(--terracotta);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--terracotta);
+    color: var(--white);
+  }
+
+  /* Reduced motion: neutralise CSS animations and transitions. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-@layer utilities {
-  .bg-grid-pattern {
-    background-image: 
-      linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
+@layer components {
+  /* Page container: 1200px max, 20px side padding mobile / 32px from 768px. */
+  .container-page {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--container-pad);
   }
-  
-  .text-shadow-lg {
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+  /* Vertical section rhythm: 64px mobile -> 112px desktop. */
+  .section {
+    padding-block: var(--section-pad);
   }
-  
-  .text-shadow-glow {
-    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+
+  /* Glass on charcoal. */
+  .glass {
+    background: rgba(246, 241, 233, 0.07);
+    border: 1px solid rgba(246, 241, 233, 0.15);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    border-radius: 20px;
   }
-  
-  .backdrop-blur-glass {
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
+
+  /* Glass on cream. */
+  .glass-dark {
+    background: rgba(43, 42, 40, 0.55);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    border-radius: 20px;
   }
-  
-  .transform-gpu {
-    transform: translateZ(0);
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass,
+    .glass-dark {
+      background: var(--charcoal-soft);
+    }
   }
-  
-  .perspective-1000 {
-    perspective: 1000px;
+
+  /* Typography for sanitized API HTML (RichText). Light surfaces only. */
+  .rich-text {
+    color: var(--ink);
+    font-size: var(--fs-body);
+    line-height: 1.65;
   }
-  
-  .preserve-3d {
-    transform-style: preserve-3d;
+
+  .rich-text > * + * {
+    margin-top: 1.1em;
+  }
+
+  .rich-text h2 {
+    margin-top: 1.8em;
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--charcoal);
+  }
+
+  .rich-text h3,
+  .rich-text h4 {
+    margin-top: 1.6em;
+    font-size: var(--fs-body);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--charcoal);
+  }
+
+  .rich-text ul,
+  .rich-text ol {
+    padding-left: 1.4em;
+  }
+
+  .rich-text ul {
+    list-style: disc;
+  }
+
+  .rich-text ol {
+    list-style: decimal;
+  }
+
+  .rich-text li + li {
+    margin-top: 0.4em;
+  }
+
+  .rich-text li::marker {
+    color: var(--terracotta);
+  }
+
+  /* Body-size links stay charcoal (terracotta text is only allowed at 24px+);
+     the underline carries the brand color. */
+  .rich-text a {
+    color: var(--charcoal);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--terracotta);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .rich-text a:hover {
+    text-decoration-color: var(--charcoal);
+  }
+
+  .rich-text strong {
+    font-weight: 600;
+    color: var(--charcoal);
+  }
+
+  .rich-text blockquote {
+    border-left: 3px solid var(--terracotta);
+    padding-left: 1.2em;
+    color: var(--charcoal);
+    font-style: italic;
+  }
+
+  .rich-text img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-image);
+  }
+
+  /* Long-form article variant: 19px body, 1.7 line-height. */
+  .rich-text--article {
+    font-size: 1.1875rem;
+    line-height: 1.7;
+  }
+
+  .rich-text--article h2 {
+    font-size: var(--fs-h2);
+    line-height: 1.2;
+  }
+
+  .rich-text--article h3 {
+    font-size: var(--fs-h3);
+  }
+
+  /* Only reachable if code/pre are ever added to the sanitizer allow-list. */
+  .rich-text code {
+    font-size: 0.9em;
+    background-color: var(--cream-deep);
+    border-radius: 6px;
+    padding: 0.1em 0.35em;
+  }
+
+  /* Skeleton: cream-deep block with a slow shimmer. */
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--cream-deep);
+  }
+
+  .skeleton--dark {
+    background-color: var(--charcoal-soft);
+  }
+
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, var(--cream), transparent);
+    opacity: 0.7;
+    animation: skeleton-shimmer 2s linear infinite;
+  }
+
+  .skeleton--dark::after {
+    background: linear-gradient(90deg, transparent, rgba(246, 241, 233, 0.15), transparent);
+    opacity: 1;
+  }
+
+  /* SignalArc: arcs fade + scale outward in sequence on a 2.4s loop. */
+  .signal-arc__ring {
+    transform-box: fill-box;
+    transform-origin: 0% 100%;
+  }
+
+  .signal-arc--animate .signal-arc__ring {
+    animation: signal-pulse 2.4s ease-out infinite both;
+  }
+
+  /* Reduced motion: static shimmer-free skeleton and fully visible static arcs.
+     (Explicit `animation: none` — the global reduced-motion rule alone would
+     leave these on their final, invisible keyframe.) */
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton::after {
+      animation: none !important;
+      display: none;
+    }
+
+    .signal-arc--animate .signal-arc__ring {
+      animation: none !important;
+      opacity: 1;
+      transform: none;
+    }
   }
 }
 
-@keyframes float-slow {
-  0%, 100% {
-    transform: translateY(0px);
+/* ==========================================================================
+   Motion. Only opacity + transform are animated. Everything is off under
+   prefers-reduced-motion (elements render in their final state).
+   ========================================================================== */
+
+/* Safety net: no horizontal scrollbar at any width. `clip` (not `hidden`)
+   does not create a scroll container, so position: sticky keeps working. */
+html,
+body {
+  overflow-x: clip;
+}
+
+/* --- A) Hero load sequence (one-shot). Per-element timing via CSS variables. --- */
+.hero-seq {
+  animation: hero-rise var(--hero-dur, 500ms) cubic-bezier(0.2, 0.7, 0.2, 1) var(--hero-delay, 0ms) both;
+}
+
+.hero-seq-arc {
+  animation: hero-arc 450ms ease-out 0ms both;
+}
+
+@keyframes hero-rise {
+  from {
+    /* LCP elements start at 0.01 (not 0) so the browser counts them as painted immediately. */
+    opacity: var(--hero-from-opacity, 0);
+    transform: translate3d(0, var(--hero-rise, 12px), 0);
   }
-  50% {
-    transform: translateY(-20px);
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
-.animate-float-slow {
-  animation: float-slow 6s ease-in-out infinite;
+@keyframes hero-arc {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* --- B) Scroll reveal (class added by useReveal only for below-the-fold content, ≥768px). --- */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+}
+
+.reveal.reveal-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 400ms ease-out, transform 400ms ease-out;
+}
+
+/* --- D) Card hover: lift 4px, image scales 1.03, 250ms. User-triggered only. --- */
+@media (prefers-reduced-motion: no-preference) {
+  .card-lift {
+    transition: transform 250ms ease-out;
+  }
+
+  .card-lift:hover,
+  .card-lift:focus-within {
+    transform: translate3d(0, -4px, 0);
+  }
+
+  .card-lift .card-media {
+    transition: transform 250ms ease-out;
+  }
+
+  .card-lift:hover .card-media,
+  .card-lift:focus-within .card-media {
+    transform: scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-seq,
+  .hero-seq-arc {
+    animation: none !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes signal-pulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.06);
+  }
 }

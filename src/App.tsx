@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, ReactNode } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
@@ -6,10 +6,12 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { AdminProvider } from './contexts/AdminContext';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
+import SiteHeader from './components/layout/SiteHeader';
+import SiteFooter from './components/layout/SiteFooter';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
-import Work from './pages/Work';
+import Projects from './pages/Projects';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import Contact from './pages/Contact';
@@ -30,10 +32,10 @@ import AdminContacts from './components/admin/contacts/AdminContacts';
 import AdminPartners from './components/admin/partners/AdminPartners';
 import AdminRecognitions from './components/admin/recognitions/AdminRecognitions';
 import ProtectedRoute from './components/common/ProtectedRoute';
-import './styles/globals.css';
 import CustomBgWrapper from './components/reusables/CustomBgWrapper';
 import { useLenis } from 'lenis/react';
 import Recognitions from './pages/Recognitions';
+import Styleguide from './pages/Styleguide';
 
 // Component to handle scroll to top on route changes
 function ScrollToTop() {
@@ -49,6 +51,32 @@ function ScrollToTop() {
   return null;
 }
 
+// Admin routes (/admin-login, /admin/*) keep the original Navbar/Footer layout unchanged.
+// Public routes get the redesigned floating header and footer.
+const isAdminPath = (pathname: string) => pathname.startsWith('/admin');
+
+function SiteHeaderSlot() {
+  const { pathname } = useLocation();
+  return isAdminPath(pathname) ? <Navbar /> : <SiteHeader />;
+}
+
+function SiteFooterSlot() {
+  const { pathname } = useLocation();
+  return isAdminPath(pathname) ? <Footer /> : <SiteFooter />;
+}
+
+function MainSlot({ children }: { children: ReactNode }) {
+  const { pathname } = useLocation();
+  // Public pages sit under the floating pill; each hero reserves its own top space.
+  // Public: min-h-screen keeps the footer out of the first screen while content loads (no layout shift).
+  return <main className={isAdminPath(pathname) ? 'pt-16' : 'min-h-screen'}>{children}</main>;
+}
+
+function WorkRedirect() {
+  const { search } = useLocation();
+  return <Navigate to={`/projects${search}`} replace />;
+}
+
 function App() {
   return (
     <HelmetProvider>
@@ -58,13 +86,15 @@ function App() {
             <ScrollToTop />
             <CustomBgWrapper>
               <div className="min-h-screen transition-colors duration-300">
-                <Navbar />
-                <main className="pt-16">
+                <SiteHeaderSlot />
+                <MainSlot>
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/services" element={<Services />} />
-                    <Route path="/work" element={<Work />} />
+                    <Route path="/projects" element={<Projects />} />
+                    {/* Legacy URL: keep old links working, preserving ?category= etc. */}
+                    <Route path="/work" element={<WorkRedirect />} />
                     <Route path="/products" element={<Products />} />
                     <Route path="/products/:slug" element={<ProductDetail />} />
                     <Route path="/contact" element={<Contact />} />
@@ -72,6 +102,8 @@ function App() {
                     <Route path="/blog/:slug" element={<BlogDetail />} />
                     <Route path="/recognitions" element={<Recognitions />} />
                     <Route path="/admin-login" element={<AdminLogin />} />
+                    {/* TEMPORARY: design-foundation check page */}
+                    <Route path="/styleguide" element={<Styleguide />} />
                     
                     {/* Admin Routes */}
                     <Route
@@ -125,8 +157,8 @@ function App() {
                       }
                     />
                   </Routes>
-                </main>
-                <Footer />
+                </MainSlot>
+                <SiteFooterSlot />
               </div>
             </CustomBgWrapper>
             <Toaster

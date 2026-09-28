@@ -14,7 +14,7 @@ const AdminDashboard = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="min-h-screen bg-gray-100 dark:bg-gray-900"
+        className="min-h-screen bg-cream-deep "
       >
         <AdminDashboardLayout />
       </motion.div>

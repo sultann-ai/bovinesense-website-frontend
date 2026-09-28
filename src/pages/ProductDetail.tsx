@@ -1,209 +1,176 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useCallback } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
-import { FaExternalLinkAlt, FaGithub, FaArrowLeft } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import { productsService } from '../services/productsService';
-import { Product } from '../types';
+import { useApiResource } from '../hooks/useApiResource';
+import {
+  SectionPanel,
+  ArcFrame,
+  Button,
+  RichText,
+  Skeleton,
+  ErrorState,
+  NotFoundState,
+  ArrowLeft,
+  Check,
+  ExternalLink,
+  Img,
+} from '../components/ui';
+import ScreenshotGallery from '../components/products/ScreenshotGallery';
+import { hasRichTextContent } from '../utils/sanitize';
+
+const nonEmpty = (value: unknown): value is string => typeof value === 'string' && value.trim() !== '';
+
+const TopPad = 'pt-32 md:pt-40';
 
 const ProductDetail = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { slug = '' } = useParams<{ slug: string }>();
+  const fetchProduct = useCallback(() => productsService.getBySlug(slug), [slug]);
+  const { status, data: product, httpStatus, retry } = useApiResource(fetchProduct);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      if (!slug) return;
-      try {
-        const data = await productsService.getBySlug(slug);
-        setProduct(data);
-      } catch (error) {
-        console.error('Error fetching product:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [slug]);
-
-  if (loading) {
+  if (status === 'loading') {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="animate-pulse">
-            <div className="h-64 bg-gray-300 rounded-xl mb-8"></div>
-            <div className="h-8 bg-gray-300 rounded w-1/3 mb-4"></div>
-            <div className="h-4 bg-gray-300 rounded w-2/3 mb-8"></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="h-64 bg-gray-300 rounded"></div>
-              <div className="h-64 bg-gray-300 rounded"></div>
-            </div>
+      <>
+        <SectionPanel key="header" tone="charcoal" className={TopPad}>
+          <div aria-busy="true" className="grid gap-10 lg:grid-cols-2">
+            <span className="sr-only">Loading product…</span>
+            <Skeleton variant="text" lines={3} />
+            <Skeleton variant="image" />
           </div>
-        </div>
-      </div>
+        </SectionPanel>
+        <SectionPanel key="body" tone="cream">
+          <div className="max-w-[760px]">
+            <Skeleton variant="text" lines={6} />
+          </div>
+        </SectionPanel>
+      </>
     );
   }
 
-  if (!product) {
+  if (status === 'error' || !product) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Product Not Found
-          </h1>
-          <Link
-            to="/products"
-            className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
-          >
-            Back to Products
-          </Link>
-        </div>
-      </div>
+      <SectionPanel key="error" tone="cream" className={TopPad}>
+        <Helmet>
+          <title>Product not found - Bovine</title>
+        </Helmet>
+        {httpStatus === 404 ? (
+          <NotFoundState
+            title="Product not found"
+            message="This product doesn't exist or is no longer available."
+            action={{ label: 'All products', to: '/products' }}
+          />
+        ) : (
+          <ErrorState onRetry={retry} />
+        )}
+      </SectionPanel>
     );
   }
+
+  const features = (product.features ?? []).filter(nonEmpty);
+  const screenshots = (product.screenshots ?? []).filter(nonEmpty);
+  const hasLinks = nonEmpty(product.githubLink) || nonEmpty(product.liveLink);
 
   return (
     <>
       <Helmet>
-        <title>{product.name} - BovineSense</title>
+        <title>{product.name} - Bovine</title>
         <meta name="description" content={product.shortDescription} />
       </Helmet>
 
-      <div className="min-h-screen bg-white dark:bg-gray-900">
-        {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-gray-900 dark:to-gray-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <Link
-                to="/products"
-                className="inline-flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors mb-6"
-              >
-                <FaArrowLeft className="mr-2" /> Back to Products
-              </Link>
-              
-              <img
+      {/* Header */}
+      <SectionPanel key="header" tone="charcoal" aria-labelledby="product-title" className={TopPad}>
+        <Link
+          to="/products"
+          className="inline-flex items-center gap-2 rounded-pill text-small font-medium text-cream underline-offset-4 hover:underline"
+        >
+          <ArrowLeft size={18} />
+          All products
+        </Link>
+        <div className="mt-8 grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h1 id="product-title" className="text-hero text-cream">{product.name}</h1>
+            <p className="mt-6 max-w-measure text-body text-cream">{product.shortDescription}</p>
+          </div>
+          {nonEmpty(product.bannerImage) && (
+            <ArcFrame arcSide="top-right">
+              <Img
                 src={product.bannerImage}
                 alt={product.name}
-                className="w-full h-64 md:h-96 object-cover rounded-xl shadow-lg mb-8"
+                width={1400}
+                height={875}
+                widths={[640, 960, 1280, 1600]}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                priority
+                className="h-full w-full object-cover"
               />
-              
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-                <div>
-                  <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
-                    {product.name}
-                  </h1>
-                  <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-6">
-                    {product.shortDescription}
-                  </p>
-                </div>
-                
-                <div className="flex space-x-4">
-                  {product.liveLink && (
-                    <a
-                      href={product.liveLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold rounded-lg hover:from-primary-700 hover:to-secondary-700 transition-all duration-300"
-                    >
-                      <FaExternalLinkAlt className="mr-2" /> Live Demo
-                    </a>
-                  )}
-                  {product.githubLink && (
-                    <a
-                      href={product.githubLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-6 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 border border-gray-200 dark:border-gray-600"
-                    >
-                      <FaGithub className="mr-2" /> View Code
-                    </a>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+            </ArcFrame>
+          )}
+        </div>
+      </SectionPanel>
 
-        {/* Content Section */}
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              {/* Description */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-                  About This Product
-                </h2>
-                <div 
-                  className="text-gray-600 dark:text-gray-300 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: product.fullDescription }}
-                />
-              </motion.div>
+      {/* Body */}
+      <SectionPanel key="body" tone="cream">
+        <div className="flex max-w-[760px] flex-col gap-16">
+          {hasRichTextContent(product.fullDescription) && (
+            <section aria-labelledby="product-what">
+              <h2 id="product-what" className="text-h2 text-charcoal">What it does</h2>
+              <RichText value={product.fullDescription} className="mt-6" />
+            </section>
+          )}
 
-              {/* Features */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-                  Key Features
-                </h2>
-                <ul className="space-y-3">
-                  {product.features.map((feature, index) => (
-                    <li key={index} className="flex items-start">
-                      <div className="w-2 h-2 bg-primary-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                      <span className="text-gray-600 dark:text-gray-300">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            </div>
-          </div>
-        </section>
+          {features.length > 0 && (
+            <section aria-labelledby="product-features">
+              <h2 id="product-features" className="text-h2 text-charcoal">Features</h2>
+              <ul className="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+                {features.map((feature, i) => (
+                  <li key={`${feature}-${i}`} className="flex items-start gap-3 text-body">
+                    <Check size={22} className="mt-[3px] shrink-0 text-terracotta" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+        </div>
 
-        {/* Screenshots */}
-        {product.screenshots && product.screenshots.length > 0 && (
-          <section className="py-20 bg-gray-50 dark:bg-gray-800">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-12 text-center">
-                  Screenshots
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {product.screenshots.map((screenshot, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                    >
-                      <img
-                        src={screenshot}
-                        alt={`${product.name} screenshot ${index + 1}`}
-                        className="w-full h-auto rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-                      />
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
+        {screenshots.length > 0 && (
+          <section aria-labelledby="product-screenshots" className="mt-16">
+            <h2 id="product-screenshots" className="mb-6 text-h2 text-charcoal">Screenshots</h2>
+            <ScreenshotGallery productName={product.name} screenshots={screenshots} />
           </section>
         )}
-      </div>
+
+        {hasLinks && (
+            <div className="mt-16 flex flex-wrap gap-4">
+              {nonEmpty(product.liveLink) && (
+                <Button variant="secondary" href={product.liveLink}>
+                  <span className="inline-flex items-center gap-2">
+                    <ExternalLink size={18} />
+                    Visit live site
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </span>
+                </Button>
+              )}
+              {nonEmpty(product.githubLink) && (
+                <Button variant="secondary" href={product.githubLink}>
+                  <span className="inline-flex items-center gap-2">
+                    <ExternalLink size={18} />
+                    View on GitHub
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </span>
+                </Button>
+              )}
+            </div>
+        )}
+      </SectionPanel>
+
+      {/* Footer band */}
+      <SectionPanel tone="charcoal" roundedTop aria-labelledby="product-cta">
+        <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <h2 id="product-cta" className="text-h2 text-cream">Interested in {product.name}?</h2>
+          <Button to="/contact" arrow>Talk to us</Button>
+        </div>
+      </SectionPanel>
     </>
   );
 };

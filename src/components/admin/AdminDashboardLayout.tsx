@@ -33,7 +33,7 @@ const AdminDashboardLayout = () => {
   const activeTab = tabs.find(tab => location.pathname === tab.path)?.id || 'founders';
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="min-h-screen bg-cream-deep text-ink">
       {/* Header */}
       <AdminHeader 
         admin={admin}
@@ -52,7 +52,7 @@ const AdminDashboardLayout = () => {
         {/* Main Content */}
         <div className="flex-1">
           <div className="p-4 lg:p-8">
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+            <div className="bg-cream rounded-panel shadow-lg">
               <div className="p-6">
                 <Outlet />
               </div>

@@ -20,7 +20,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onEdit, onView, onDe
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+    <div className="bg-cream rounded-card shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       {product.bannerImage && (
         <div className="h-48 overflow-hidden">
           <img
@@ -33,7 +33,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onEdit, onView, onDe
       
       <div className="p-4">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="font-semibold text-lg text-gray-900 line-clamp-1">
+          <h3 className="font-semibold text-lg text-charcoal line-clamp-1">
             {product.name}
           </h3>
           {product.githubLink && (
@@ -41,14 +41,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onEdit, onView, onDe
               href={product.githubLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-500 hover:text-gray-700"
+              className="text-ink hover:text-charcoal"
             >
               <Github size={16} />
             </a>
           )}
         </div>
 
-        <p className="text-gray-600 text-sm mb-3 line-clamp-3">
+        <p className="text-ink text-sm mb-3 line-clamp-3">
           {truncateDescription(product.shortDescription)}
         </p>
 
@@ -57,13 +57,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onEdit, onView, onDe
             {product.features.slice(0, 3).map((feature: string, index: number) => (
               <span
                 key={index}
-                className="px-2 py-1 bg-blue-100 text-blue-600 text-xs rounded-full"
+                className="px-2 py-1 border border-hairline text-charcoal text-xs rounded-full"
               >
                 {feature}
               </span>
             ))}
             {product.features.length > 3 && (
-              <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+              <span className="px-2 py-1 bg-cream-deep text-ink text-xs rounded-full">
                 +{product.features.length - 3}
               </span>
             )}
@@ -71,7 +71,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onEdit, onView, onDe
         )}
 
         <div className="flex items-center justify-between mb-3">
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-ink">
             Created: {formatDate(product.createdAt)}
           </div>
           {product.liveLink && (
@@ -79,7 +79,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onEdit, onView, onDe
               href={product.liveLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1"
+              className="text-charcoal hover:text-terracotta text-sm flex items-center gap-1"
             >
               <ExternalLink size={14} />
               Live Demo
@@ -88,28 +88,28 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onEdit, onView, onDe
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-600">
+          <div className="text-sm text-ink">
             {product.screenshots?.length || 0} screenshots
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => onView(product)}
-              className="p-1 text-green-600 hover:bg-green-50 rounded transition-colors"
+              className="p-1 text-ink hover:bg-cream-deep rounded transition-colors"
               title="View Details"
             >
               <Eye size={16} />
             </button>
             <button
               onClick={() => onEdit(product)}
-              className="p-1 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+              className="p-1 text-charcoal hover:bg-cream-deep rounded transition-colors"
               title="Edit"
             >
               <Edit size={16} />
             </button>
             <button
               onClick={() => onDelete(product._id)}
-              className="p-1 text-red-600 hover:bg-red-50 rounded transition-colors"
+              className="p-1 text-danger hover:bg-cream-deep rounded transition-colors"
               title="Delete"
             >
               <Trash2 size={16} />

@@ -1,21 +1,19 @@
-import axios from 'axios';
+import { api } from './apiClient';
 import { Founder } from '../types';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 export const foundersService = {
   async getAll(): Promise<Founder[]> {
-    const response = await axios.get(`${API_URL}/founders`);
+    const response = await api.get('/founders');
     return response.data;
   },
 
   async getById(id: string): Promise<Founder> {
-    const response = await axios.get(`${API_URL}/founders/${id}`);
+    const response = await api.get(`/founders/${id}`);
     return response.data;
   },
 
   async create(formData: FormData): Promise<Founder> {
-    const response = await axios.post(`${API_URL}/founders`, formData, {
+    const response = await api.post('/founders', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -24,7 +22,7 @@ export const foundersService = {
   },
 
   async update(id: string, formData: FormData): Promise<Founder> {
-    const response = await axios.put(`${API_URL}/founders/${id}`, formData, {
+    const response = await api.put(`/founders/${id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -33,6 +31,6 @@ export const foundersService = {
   },
 
   async delete(id: string): Promise<void> {
-    await axios.delete(`${API_URL}/founders/${id}`);
+    await api.delete(`/founders/${id}`);
   }
 };

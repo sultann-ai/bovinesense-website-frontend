@@ -1,30 +1,28 @@
-import axios from 'axios';
+import { api } from './apiClient';
 import { Service } from '../types';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 export const servicesService = {
   async getAll(): Promise<Service[]> {
-    const response = await axios.get(`${API_URL}/services`);
+    const response = await api.get('/services');
     return response.data;
   },
 
   async getById(id: string): Promise<Service> {
-    const response = await axios.get(`${API_URL}/services/${id}`);
+    const response = await api.get(`/services/${id}`);
     return response.data;
   },
 
   async create(service: Omit<Service, '_id' | 'createdAt' | 'updatedAt'>): Promise<Service> {
-    const response = await axios.post(`${API_URL}/services`, service);
+    const response = await api.post('/services', service);
     return response.data;
   },
 
   async update(id: string, service: Partial<Service>): Promise<Service> {
-    const response = await axios.put(`${API_URL}/services/${id}`, service);
+    const response = await api.put(`/services/${id}`, service);
     return response.data;
   },
 
   async delete(id: string): Promise<void> {
-    await axios.delete(`${API_URL}/services/${id}`);
+    await api.delete(`/services/${id}`);
   }
 };

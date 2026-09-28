@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
-import { FaLock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useAdmin } from '../contexts/AdminContext';
 import toast from 'react-hot-toast';
+import { GlassCard, Button } from '../components/ui';
+import { AUTH_NOTICE_KEY } from '../services/apiClient';
+import { WORDMARK_ON_DARK } from '../components/layout/navItems';
+
+// Glass input recipe (same as the public contact form).
+const inputClass =
+  'w-full rounded-[14px] border border-[rgba(246,241,233,0.15)] bg-[rgba(246,241,233,0.07)] px-4 py-3 text-body text-cream placeholder:text-[rgba(246,241,233,0.45)] focus:border-terracotta';
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +17,8 @@ const AdminLogin = () => {
     password: ''
   });
   const [isLoading, setIsLoading] = useState(false);
+  // Set by the API client when a request fails with an expired/invalid token.
+  const [notice] = useState(() => sessionStorage.getItem(AUTH_NOTICE_KEY));
   const { login, isAuthenticated, isLoading: authLoading } = useAdmin();
   const navigate = useNavigate();
 
@@ -32,9 +39,10 @@ const AdminLogin = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (isLoading || authLoading || isAuthenticated) return; // Prevent multiple submissions
-    
+
+    sessionStorage.removeItem(AUTH_NOTICE_KEY);
     setIsLoading(true);
 
     try {
@@ -52,33 +60,33 @@ const AdminLogin = () => {
   return (
     <>
       <Helmet>
-        <title>Admin Login - BovineSense</title>
+        <title>Admin Login - Bovine</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-md w-full mx-4"
-        >
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaLock className="text-white text-2xl" />
-              </div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Admin Login
-              </h1>
-              <p className="text-gray-600 dark:text-gray-300 mt-2">
-                Enter your credentials to access the admin dashboard
-              </p>
-            </div>
+      <div className="flex min-h-screen items-center justify-center bg-charcoal px-4 py-16">
+        <div className="w-full max-w-md">
+          <img
+            src={WORDMARK_ON_DARK.src}
+            width={WORDMARK_ON_DARK.width}
+            height={WORDMARK_ON_DARK.height}
+            alt="Bovine"
+            className="mx-auto mb-8 h-8 w-auto"
+          />
 
-            <form onSubmit={handleLogin}>
+          <GlassCard tone="dark">
+            <h1 className="text-h3 text-cream">Admin Login</h1>
+            <p className="mt-2 text-small text-cream">Enter your credentials to access the admin dashboard</p>
+
+            {notice && (
+              <p role="alert" className="mt-5 rounded-[14px] border border-gold p-3 text-small text-gold">
+                {notice}
+              </p>
+            )}
+
+            <form onSubmit={handleLogin} className="mt-6">
               <div className="mb-4">
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label htmlFor="username" className="mb-2 block text-small font-semibold text-cream">
                   Username or Email
                 </label>
                 <input
@@ -88,13 +96,13 @@ const AdminLogin = () => {
                   value={formData.username}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className={inputClass}
                   placeholder="Enter username or email"
                 />
               </div>
 
               <div className="mb-6">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label htmlFor="password" className="mb-2 block text-small font-semibold text-cream">
                   Password
                 </label>
                 <input
@@ -104,21 +112,17 @@ const AdminLogin = () => {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className={inputClass}
                   placeholder="Enter password"
                 />
               </div>
 
-              <button
-                type="submit"
-                disabled={isLoading || authLoading}
-                className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold py-3 px-4 rounded-lg hover:from-primary-700 hover:to-secondary-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
+              <Button type="submit" disabled={isLoading || authLoading} className="w-full">
                 {isLoading ? 'Authenticating...' : 'Login'}
-              </button>
+              </Button>
             </form>
-          </div>
-        </motion.div>
+          </GlassCard>
+        </div>
       </div>
     </>
   );

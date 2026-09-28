@@ -173,7 +173,7 @@ const ProductAddForm: React.FC<ProductAddFormProps> = ({ onSuccess, onCancel }) 
               }
             }}
           />
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-ink">
             URL-friendly identifier. Leave empty to auto-generate from product name.
           </p>
         </div>
@@ -218,8 +218,8 @@ const ProductAddForm: React.FC<ProductAddFormProps> = ({ onSuccess, onCancel }) 
       {/* Dynamic Features */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <label className="block text-sm font-medium text-gray-700">
-            Features <span className="text-red-500">*</span>
+          <label className="block text-sm font-medium text-ink">
+            Features <span className="text-danger">*</span>
           </label>
           <Button
             type="button"
@@ -241,13 +241,13 @@ const ProductAddForm: React.FC<ProductAddFormProps> = ({ onSuccess, onCancel }) 
                 onChange={(e) => updateFeature(index, e.target.value)}
                 placeholder={`Feature ${index + 1}`}
                 disabled={isSubmitting}
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                className="flex-1 px-3 py-2 border border-hairline rounded-[14px] disabled:bg-cream-deep"
               />
               {features.length > 1 && (
                 <button
                   type="button"
                   onClick={() => removeFeature(index)}
-                  className="p-2 text-red-600 hover:bg-red-50 rounded transition-colors disabled:opacity-50"
+                  className="p-2 text-danger hover:bg-cream-deep rounded transition-colors disabled:opacity-50"
                   title="Remove feature"
                   disabled={isSubmitting}
                 >
@@ -257,7 +257,7 @@ const ProductAddForm: React.FC<ProductAddFormProps> = ({ onSuccess, onCancel }) 
             </div>
           ))}
         </div>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-ink">
           Add key features of your product. At least one feature is required.
         </p>
       </div>
@@ -313,7 +313,7 @@ const ProductAddForm: React.FC<ProductAddFormProps> = ({ onSuccess, onCancel }) 
           required={true}
           error={imageError}
         />
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-ink">
           Upload a banner image for your product. Recommended size: 1200x600px
         </p>
       </div>

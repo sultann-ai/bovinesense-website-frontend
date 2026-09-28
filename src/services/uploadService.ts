@@ -1,18 +1,17 @@
-import axios from 'axios';
+import { api } from './apiClient';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-
+// Unused: the backend has no /upload/image route (see REDESIGN.md). Kept unchanged in behaviour.
 export const uploadService = {
   async uploadImage(file: File): Promise<string> {
     const formData = new FormData();
     formData.append('image', file);
-    
-    const response = await axios.post(`${API_URL}/upload/image`, formData, {
+
+    const response = await api.post('/upload/image', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
-    
+
     return response.data.url;
   }
 };

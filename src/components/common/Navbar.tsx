@@ -33,15 +33,15 @@ const Navbar = () => {
     <motion.nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled 
-          ? 'bg-white/70 dark:bg-[#0a1b33]/90 backdrop-blur-xl border-b border-white/20 dark:border-[#1b3a61] shadow-2xl shadow-black/5 dark:shadow-black/30' 
-          : 'bg-white/30 dark:bg-[#071426]/85 backdrop-blur-2xl border-b border-white/10 dark:border-[#1b3a61]/70'
+          ? 'bg-charcoal border-b border-hairline-dark' 
+          : 'bg-charcoal border-b border-hairline-dark'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, type: "spring", stiffness: 100, damping: 20 }}
     >
       {/* Glassmorphism Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 dark:from-[#163b68]/40 dark:via-[#0d2b4f]/30 dark:to-[#071426]/20" />
+      <div className="hidden" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex justify-between items-center py-3 md:py-5 ">
@@ -56,7 +56,7 @@ const Navbar = () => {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <img 
-                src={theme === 'light' ? '/blackLogo.png' : '/whiteLogo.png'}
+                src={'/whiteLogo.png'}
                 alt="BovineSense Logo"
                 className="w-full h-full object-contain "
               />
@@ -74,24 +74,24 @@ const Navbar = () => {
               >
                 <Link
                   to={item.path}
-                  className={`relative px-6 py-3 text-sm font-semibold transition-all duration-300 rounded-xl group focus:outline-none ${
+                  className={`relative px-6 py-3 text-sm font-semibold transition-colors duration-150 rounded-pill group ${
                     location.pathname === item.path
-                      ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-white/20 dark:hover:bg-[#102746]/70 hover:backdrop-blur-md hover:shadow-md hover:border hover:border-white/20 dark:hover:border-[#2b527e]'
+                      ? 'bg-terracotta text-white'
+                      : 'text-cream hover:bg-charcoal-soft'
                   }`}
                 >
                   <span className="relative z-10">{item.name}</span>
 
                   {/* Hover effect background (only for non-active items) */}
                   {location.pathname !== item.path && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="hidden" />
                   )}
                   
                   {/* Active underline indicator */}
                   {location.pathname === item.path && (
                     <motion.div
                       layoutId="activeIndicator"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"
+                      className="hidden"
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
                   )}
@@ -104,7 +104,7 @@ const Navbar = () => {
           <div className="flex items-center space-x-3">
             <motion.button
               onClick={toggleTheme}
-                  className="p-3 rounded-xl bg-white/30 dark:bg-[#102746]/80 backdrop-blur-md border border-white/20 dark:border-[#1b3a61] text-gray-700 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-[#17345a] hover:shadow-lg transition-all duration-300 group"
+                  className="p-3 rounded-pill text-cream hover:bg-charcoal-soft transition-colors duration-150 group"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -114,8 +114,8 @@ const Navbar = () => {
                 transition={{ duration: 0.5, type: "spring" }}
               >
                 {theme === 'light' ? 
-                  <FaMoon size={18} className="group-hover:text-blue-500 transition-colors" /> : 
-                  <FaSun size={18} className="group-hover:text-yellow-500 transition-colors" />
+                  <FaMoon size={18} /> : 
+                  <FaSun size={18} />
                 }
               </motion.div>
             </motion.button>
@@ -123,7 +123,7 @@ const Navbar = () => {
             {/* Enhanced Mobile Menu Button */}
             <motion.button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-3 rounded-xl bg-white/30 dark:bg-[#102746]/80 backdrop-blur-md border border-white/20 dark:border-[#1b3a61] text-gray-700 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-[#17345a] hover:shadow-lg transition-all duration-300"
+              className="md:hidden p-3 rounded-pill text-cream hover:bg-charcoal-soft transition-colors duration-150"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -146,10 +146,10 @@ const Navbar = () => {
             animate={{ opacity: 1, height: 'auto', y: 0 }}
             exit={{ opacity: 0, height: 0, y: -20 }}
             transition={{ duration: 0.4, type: "spring", stiffness: 100 }}
-            className="md:hidden bg-white/80 dark:bg-[#0a1b33]/95 backdrop-blur-xl border-t border-white/20 dark:border-[#1b3a61] shadow-2xl"
+            className="md:hidden bg-charcoal border-t border-hairline-dark"
           >
             {/* Mobile menu gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 dark:from-[#163b68]/40 dark:via-[#0d2b4f]/30 dark:to-[#071426]/20" />
+            <div className="hidden" />
             
             <div className="px-6 py-6 space-y-2 relative">
               {navItems.map((item, index) => (
@@ -162,15 +162,15 @@ const Navbar = () => {
                   <Link
                     to={item.path}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`block px-6 py-4 text-lg font-semibold rounded-xl transition-all duration-300 focus:outline-none ${
+                    className={`block px-6 py-4 text-lg font-semibold rounded-pill transition-colors duration-150 ${
                       location.pathname === item.path
-                        ? 'text-blue-600 dark:text-blue-400 bg-white/50 dark:bg-gray-800/50 backdrop-blur-md shadow-lg border border-white/30 dark:border-gray-700/30'
-                        : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white/30 dark:hover:bg-gray-800/30 hover:backdrop-blur-md hover:shadow-md'
+                        ? 'bg-terracotta text-white'
+                        : 'text-cream hover:bg-charcoal-soft'
                     }`}
                   >
                     <span className="relative z-10">{item.name}</span>
                     {location.pathname === item.path && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-xl" />
+                      <div className="hidden" />
                     )}
                   </Link>
                 </motion.div>

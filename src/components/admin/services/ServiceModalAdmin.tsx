@@ -188,7 +188,7 @@ const ServiceModal = ({ isOpen, onClose, editingService, onSuccess }: ServiceMod
         {/* Services Section */}
         <div>
           <div className="flex justify-between items-center mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-ink ">
               Services
             </label>
             <Button
@@ -204,16 +204,16 @@ const ServiceModal = ({ isOpen, onClose, editingService, onSuccess }: ServiceMod
           
           <div className="space-y-4">
             {serviceFields.map((field, index) => (
-              <div key={field.id} className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+              <div key={field.id} className="border border-hairline rounded-card p-4">
                 <div className="flex justify-between items-center mb-3">
-                  <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <h4 className="text-sm font-medium text-ink ">
                     Service {index + 1}
                   </h4>
                   {serviceFields.length > 1 && (
                     <button
                       type="button"
                       onClick={() => handleRemoveService(index)}
-                      className="text-red-600 hover:text-red-800 p-1"
+                      className="text-danger hover:text-danger p-1"
                       disabled={submitting}
                     >
                       <FaTrash size={12} />
@@ -256,8 +256,8 @@ const ServiceModal = ({ isOpen, onClose, editingService, onSuccess }: ServiceMod
                   {/* Features for this service */}
                   <div>
                     <div className="flex items-center justify-between mb-3">
-                      <label className="block text-sm font-medium text-gray-700">
-                        Features <span className="text-red-500">*</span>
+                      <label className="block text-sm font-medium text-ink">
+                        Features <span className="text-danger">*</span>
                       </label>
                       <Button
                         type="button"
@@ -279,13 +279,13 @@ const ServiceModal = ({ isOpen, onClose, editingService, onSuccess }: ServiceMod
                             onChange={(e) => updateFeature(index, featureIndex, e.target.value)}
                             placeholder={`Feature ${featureIndex + 1}`}
                             disabled={submitting}
-                            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                            className="flex-1 px-3 py-2 border border-hairline rounded-[14px] disabled:bg-cream-deep"
                           />
                           {(serviceFeatures[index] || []).length > 1 && (
                             <button
                               type="button"
                               onClick={() => removeFeature(index, featureIndex)}
-                              className="p-2 text-red-600 hover:bg-red-50 rounded transition-colors disabled:opacity-50"
+                              className="p-2 text-danger hover:bg-cream-deep rounded transition-colors disabled:opacity-50"
                               title="Remove feature"
                               disabled={submitting}
                             >
@@ -295,7 +295,7 @@ const ServiceModal = ({ isOpen, onClose, editingService, onSuccess }: ServiceMod
                         </div>
                       ))}
                     </div>
-                    <p className="mt-1 text-sm text-gray-500">
+                    <p className="mt-1 text-sm text-ink">
                       Add key features for this service. At least one feature is required.
                     </p>
                   </div>

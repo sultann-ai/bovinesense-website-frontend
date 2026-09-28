@@ -16,12 +16,10 @@ const HeroBgWrapper: React.FC<HeroBgWrapperProps> = ({ children, className = "" 
         {[...Array(50)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-white/20 dark:bg-slate-400/30 rounded-full animate-float"
+            className="absolute w-1 h-1 bg-white/20 dark:bg-slate-400/30 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`
             }}
           />
         ))}
@@ -29,9 +27,9 @@ const HeroBgWrapper: React.FC<HeroBgWrapperProps> = ({ children, className = "" 
 
       {/* Animated blobs */}
        <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 dark:from-slate-600/15 dark:to-gray-600/15 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/20 to-pink-500/20 dark:from-slate-700/10 dark:to-gray-700/10 rounded-full blur-3xl animate-bounce-slow" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 dark:from-slate-500/8 dark:to-gray-500/8 rounded-full blur-2xl animate-rotate-slow"></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 dark:from-slate-600/15 dark:to-gray-600/15 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/20 to-pink-500/20 dark:from-slate-700/10 dark:to-gray-700/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 dark:from-slate-500/8 dark:to-gray-500/8 rounded-full blur-2xl"></div>
       </div>
 
       {/* Grid pattern overlay */}

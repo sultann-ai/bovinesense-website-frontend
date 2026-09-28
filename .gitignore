@@ -13,3 +13,4 @@ coverage/
 *.orig
 *.sublime-workspace
 *.sublime-project
+*.local

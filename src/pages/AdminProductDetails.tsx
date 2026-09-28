@@ -57,7 +57,7 @@ const AdminProductDetails: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex justify-center items-center">
+      <div className="min-h-screen bg-cream-deep flex justify-center items-center">
         <LoadingSpinner />
       </div>
     );
@@ -65,9 +65,9 @@ const AdminProductDetails: React.FC = () => {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-gray-50 flex justify-center items-center">
+      <div className="min-h-screen bg-cream-deep flex justify-center items-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
+          <h1 className="text-2xl font-bold text-charcoal mb-4">Product Not Found</h1>
           <Button onClick={() => navigate('/admin/dashboard')}>Back to Admin</Button>
         </div>
       </div>
@@ -75,9 +75,9 @@ const AdminProductDetails: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-cream-deep">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-cream shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -90,8 +90,8 @@ const AdminProductDetails: React.FC = () => {
                 Back
               </Button>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">{product.name}</h1>
-                <p className="text-gray-600">Product Details</p>
+                <h1 className="text-2xl font-bold text-charcoal">{product.name}</h1>
+                <p className="text-ink">Product Details</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -118,7 +118,7 @@ const AdminProductDetails: React.FC = () => {
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-cream rounded-card shadow-md overflow-hidden">
           {/* Banner Image */}
           {product.bannerImage && (
             <div className="h-64 md:h-80 overflow-hidden">
@@ -135,20 +135,20 @@ const AdminProductDetails: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2">
                 <div className="mb-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-3">Description</h2>
-                  <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                  <h2 className="text-xl font-semibold text-charcoal mb-3">Description</h2>
+                  <p className="text-ink leading-relaxed whitespace-pre-wrap">
                     {product.fullDescription}
                   </p>
                 </div>
 
                 {product.features && product.features.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Features</h3>
+                    <h3 className="text-lg font-semibold text-charcoal mb-3">Features</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       {product.features.map((feature, index) => (
                         <div key={index} className="flex items-center">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-                          <span className="text-gray-700">{feature}</span>
+                          <div className="w-2 h-2 bg-terracotta rounded-full mr-3"></div>
+                          <span className="text-ink">{feature}</span>
                         </div>
                       ))}
                     </div>
@@ -158,12 +158,12 @@ const AdminProductDetails: React.FC = () => {
                 {/* Screenshots Gallery */}
                 {product.screenshots && product.screenshots.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    <h3 className="text-lg font-semibold text-charcoal mb-3">
                       Screenshots ({product.screenshots.length})
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {product.screenshots.map((screenshot, index) => (
-                        <div key={index} className="rounded-lg overflow-hidden shadow-md">
+                        <div key={index} className="rounded-card overflow-hidden shadow-md">
                           <img
                             src={screenshot}
                             alt={`${product.name} screenshot ${index + 1}`}
@@ -179,35 +179,35 @@ const AdminProductDetails: React.FC = () => {
 
               {/* Sidebar */}
               <div className="lg:col-span-1">
-                <div className="bg-gray-50 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Product Info</h3>
+                <div className="bg-cream-deep rounded-card p-6">
+                  <h3 className="text-lg font-semibold text-charcoal mb-4">Product Info</h3>
                   
                   <div className="space-y-4">
                     <div>
-                      <label className="text-sm font-medium text-gray-500">Slug</label>
-                      <p className="text-gray-900">{product.slug}</p>
+                      <label className="text-sm font-medium text-ink">Slug</label>
+                      <p className="text-charcoal">{product.slug}</p>
                     </div>
 
                     <div>
-                      <label className="text-sm font-medium text-gray-500">Created</label>
-                      <p className="text-gray-900">{new Date(product.createdAt).toLocaleDateString()}</p>
+                      <label className="text-sm font-medium text-ink">Created</label>
+                      <p className="text-charcoal">{new Date(product.createdAt).toLocaleDateString()}</p>
                     </div>
 
                     <div>
-                      <label className="text-sm font-medium text-gray-500">Last Updated</label>
-                      <p className="text-gray-900">{new Date(product.updatedAt).toLocaleDateString()}</p>
+                      <label className="text-sm font-medium text-ink">Last Updated</label>
+                      <p className="text-charcoal">{new Date(product.updatedAt).toLocaleDateString()}</p>
                     </div>
 
                     {/* Links */}
                     <div className="border-t pt-4">
-                      <h4 className="text-md font-semibold text-gray-900 mb-3">Links</h4>
+                      <h4 className="text-md font-semibold text-charcoal mb-3">Links</h4>
                       <div className="space-y-2">
                         {product.githubLink && (
                           <a
                             href={product.githubLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                            className="flex items-center gap-2 text-charcoal hover:text-terracotta transition-colors"
                           >
                             <Github size={16} />
                             GitHub Repository
@@ -219,7 +219,7 @@ const AdminProductDetails: React.FC = () => {
                             href={product.liveLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                            className="flex items-center gap-2 text-charcoal hover:text-terracotta transition-colors"
                           >
                             <ExternalLink size={16} />
                             Live Demo

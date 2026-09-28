@@ -101,7 +101,7 @@ const AdminRecognitions = () => {
   };
 
   if (loading) {
-    return <p className="text-gray-600 dark:text-gray-300">Loading recognitions...</p>;
+    return <p className="text-ink ">Loading recognitions...</p>;
   }
 
   return (
@@ -109,8 +109,8 @@ const AdminRecognitions = () => {
       <section>
         <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Recognized Organizations ({recognitions.length})</h2>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Manage one image for each organization or recognition event.</p>
+            <h2 className="text-xl font-semibold text-charcoal ">Recognized Organizations ({recognitions.length})</h2>
+            <p className="text-sm text-ink mt-1">Manage one image for each organization or recognition event.</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Button onClick={() => openCreate('trusted')} className="flex items-center"><FaPlus className="mr-2" /> Add Trusted Organization</Button>
@@ -119,20 +119,20 @@ const AdminRecognitions = () => {
         </div>
 
         {recognitions.length === 0 ? (
-          <p className="text-gray-500 dark:text-gray-400 py-8 text-center border border-dashed rounded-lg">No recognition organizations added yet.</p>
+          <p className="text-ink py-8 text-center border border-dashed rounded-card">No recognition organizations added yet.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {recognitions.map((recognition) => (
-              <div key={recognition._id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-700/40">
-                <div className="h-28 bg-white dark:bg-gray-800 rounded flex items-center justify-center p-4 mb-4">
+              <div key={recognition._id} className="border border-hairline rounded-card p-4 bg-cream-deep ">
+                <div className="h-28 bg-cream rounded flex items-center justify-center p-4 mb-4">
                   <img src={recognition.image} alt={recognition.name} className="max-h-full max-w-full object-contain" />
                 </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white truncate">{recognition.name}</h3>
-                <p className="text-xs uppercase tracking-wide text-primary-600 dark:text-primary-400 mt-1">{recognition.section === 'recognitions' ? 'Recognition' : 'Trusted by'}</p>
-                {recognition.website && <p className="text-sm text-gray-500 dark:text-gray-400 truncate mt-1">{recognition.website}</p>}
+                <h3 className="font-semibold text-charcoal truncate">{recognition.name}</h3>
+                <p className="text-xs uppercase tracking-wide text-charcoal mt-1">{recognition.section === 'recognitions' ? 'Recognition' : 'Trusted by'}</p>
+                {recognition.website && <p className="text-sm text-ink truncate mt-1">{recognition.website}</p>}
                 <div className="flex gap-2 mt-4">
                   <Button variant="secondary" onClick={() => openEdit(recognition)} className="flex items-center"><FaEdit className="mr-2" /> Edit</Button>
-                  <button type="button" onClick={() => removeRecognition(recognition)} className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded" title="Delete recognition"><FaTrash /></button>
+                  <button type="button" onClick={() => removeRecognition(recognition)} className="p-2 text-danger hover:bg-cream-deep rounded" title="Delete recognition"><FaTrash /></button>
                 </div>
               </div>
             ))}
@@ -145,8 +145,8 @@ const AdminRecognitions = () => {
           <FormInput id="name" label="Organization or Event Name" register={recognitionForm.register} error={recognitionForm.formState.errors.name} required disabled={submitting} />
           <FormInput id="website" label="Website" type="url" register={recognitionForm.register} disabled={submitting} placeholder="https://example.com" />
           <div>
-            <label htmlFor="section" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Section</label>
-            <select id="section" {...recognitionForm.register('section')} disabled={submitting} className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+            <label htmlFor="section" className="block text-sm font-medium text-ink mb-1">Section</label>
+            <select id="section" {...recognitionForm.register('section')} disabled={submitting} className="w-full px-3 py-2 border border-hairline rounded-[14px] bg-cream text-charcoal ">
               <option value="trusted">Trusted and recognized by</option>
               <option value="recognitions">Recognitions: meetups, forums, expos</option>
             </select>

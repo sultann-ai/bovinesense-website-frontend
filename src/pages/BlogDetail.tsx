@@ -1,133 +1,115 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useCallback, useMemo } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
-import { FaCalendarAlt, FaUser, FaArrowLeft } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import { blogService } from '../services/blogService';
-import { BlogPost } from '../types';
+import { useApiResource } from '../hooks/useApiResource';
+import {
+  SectionPanel,
+  RichText,
+  Skeleton,
+  ErrorState,
+  NotFoundState,
+  ArrowLeft,
+  Img,
+} from '../components/ui';
+import ShareRow from '../components/blog-page/ShareRow';
+import MorePosts from '../components/blog-page/MorePosts';
+import { formatDate, WIDTHS } from '../utils/images';
+import { readingMinutes } from '../utils/sanitize';
+
+const TOP_PAD = 'pt-32 md:pt-40';
 
 const BlogDetail = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { slug = '' } = useParams<{ slug: string }>();
+  const fetchPost = useCallback(() => blogService.getBySlug(slug), [slug]);
+  const { status, data: post, httpStatus, retry } = useApiResource(fetchPost);
+  const minutes = useMemo(() => readingMinutes(post?.content), [post?.content]);
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      if (!slug) return;
-      try {
-        const data = await blogService.getBySlug(slug);
-        setPost(data);
-      } catch (error) {
-        console.error('Error fetching blog post:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPost();
-  }, [slug]);
-
-  const formatDate = (dateString: string | Date) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
-  if (loading) {
+  if (status === 'loading') {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="animate-pulse">
-            <div className="h-64 bg-gray-300 rounded-xl mb-8"></div>
-            <div className="h-8 bg-gray-300 rounded w-3/4 mb-4"></div>
-            <div className="h-4 bg-gray-300 rounded w-1/2 mb-8"></div>
-            <div className="space-y-4">
-              <div className="h-4 bg-gray-300 rounded"></div>
-              <div className="h-4 bg-gray-300 rounded"></div>
-              <div className="h-4 bg-gray-300 rounded w-5/6"></div>
-            </div>
+      <>
+        <SectionPanel key="header" tone="charcoal" className={TOP_PAD}>
+          <div aria-busy="true">
+            <span className="sr-only">Loading post…</span>
+            <Skeleton variant="text" lines={2} className="max-w-2xl" />
+            <Skeleton variant="image" className="mt-10" />
           </div>
-        </div>
-      </div>
+        </SectionPanel>
+        <SectionPanel key="body" tone="cream">
+          <Skeleton variant="text" lines={8} className="mx-auto max-w-[720px]" />
+        </SectionPanel>
+      </>
     );
   }
 
-  if (!post) {
+  if (status === 'error' || !post) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Blog Post Not Found
-          </h1>
-          <Link
-            to="/blog"
-            className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
-          >
-            Back to Blog
-          </Link>
-        </div>
-      </div>
+      <SectionPanel key="error" tone="cream" className={TOP_PAD}>
+        <Helmet>
+          <title>Post not found - Bovine</title>
+        </Helmet>
+        {httpStatus === 404 ? (
+          <NotFoundState
+            title="Post not found"
+            message="This post doesn't exist or has been removed."
+            action={{ label: 'All posts', to: '/blog' }}
+          />
+        ) : (
+          <ErrorState onRetry={retry} />
+        )}
+      </SectionPanel>
     );
   }
+
+  const published = new Date(post.createdAt);
 
   return (
     <>
       <Helmet>
-        <title>{post.title} - BovineSense Blog</title>
+        <title>{post.title} - Bovine</title>
         <meta name="description" content={post.excerpt} />
       </Helmet>
 
-      <div className="min-h-screen bg-white dark:bg-gray-900">
-        <article className="py-20">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <Link
-                to="/blog"
-                className="inline-flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors mb-8"
-              >
-                <FaArrowLeft className="mr-2" /> Back to Blog
-              </Link>
-              
-              <img
-                src={post.coverImage}
-                alt={post.title}
-                className="w-full h-64 md:h-96 object-cover rounded-xl shadow-lg mb-8"
-              />
-              
-              <div className="flex items-center space-x-6 text-sm text-gray-500 dark:text-gray-400 mb-6">
-                <div className="flex items-center">
-                  <FaCalendarAlt className="mr-2" />
-                  {formatDate(post.createdAt)}
-                </div>
-                <div className="flex items-center">
-                  <FaUser className="mr-2" />
-                  {post.author}
-                </div>
-              </div>
-              
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                {post.title}
-              </h1>
-              
-              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                {post.excerpt}
-              </p>
-              
-              <div 
-                className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-a:text-primary-600 dark:prose-a:text-primary-400 prose-code:text-primary-600 dark:prose-code:text-primary-400 prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
-            </motion.div>
+      <article aria-labelledby="post-title">
+        {/* Header */}
+        <SectionPanel key="header" tone="charcoal" className={TOP_PAD}>
+          <Link
+            to="/blog"
+            className="inline-flex items-center gap-2 rounded-pill text-small font-medium text-cream underline-offset-4 hover:underline"
+          >
+            <ArrowLeft size={18} />
+            All posts
+          </Link>
+          <h1 id="post-title" className="mt-8 max-w-4xl text-h2 text-cream">{post.title}</h1>
+          <p className="mt-5 text-small text-cream">
+            {post.author} · <time dateTime={published.toISOString()}>{formatDate(published)}</time> · {minutes} min read
+          </p>
+          {post.coverImage && (
+            <Img
+              src={post.coverImage}
+              alt={post.title}
+              width={1600}
+              height={900}
+              widths={WIDTHS.full}
+              sizes="(min-width: 1264px) 1136px, 100vw"
+              priority
+              className="mt-10 aspect-[16/9] w-full rounded-image object-cover"
+            />
+          )}
+        </SectionPanel>
+
+        {/* Body: sanitized API HTML (RichText → DOMPurify allow-list). */}
+        <SectionPanel key="body" tone="cream">
+          <div className="mx-auto max-w-[720px]">
+            <RichText value={post.content} className="rich-text--article" />
+            <div className="mt-12 border-t border-[rgba(58,55,51,0.25)] pt-8">
+              <ShareRow title={post.title} />
+            </div>
           </div>
-        </article>
-      </div>
+        </SectionPanel>
+      </article>
+
+      <MorePosts currentSlug={post.slug} />
     </>
   );
 };

@@ -151,23 +151,23 @@ const ProductEditForm: React.FC<ProductEditFormProps> = ({ product, onSuccess, o
       />
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-ink mb-2">
           Full Description
         </label>
         <textarea
           {...register('fullDescription', { required: 'Full description is required' })}
           rows={6}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-3 py-2 border border-hairline rounded-[14px]    "
         />
         {errors.fullDescription && (
-          <p className="mt-1 text-sm text-red-600">{errors.fullDescription.message}</p>
+          <p className="mt-1 text-sm text-danger">{errors.fullDescription.message}</p>
         )}
       </div>
 
       {/* Dynamic Features */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-ink">
             Features
           </label>
           <Button
@@ -188,13 +188,13 @@ const ProductEditForm: React.FC<ProductEditFormProps> = ({ product, onSuccess, o
                 value={feature}
                 onChange={(e) => updateFeature(index, e.target.value)}
                 placeholder={`Feature ${index + 1}`}
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 px-3 py-2 border border-hairline rounded-[14px]    "
               />
               {features.length > 1 && (
                 <button
                   type="button"
                   onClick={() => removeFeature(index)}
-                  className="p-2 text-red-600 hover:bg-red-50 rounded transition-colors"
+                  className="p-2 text-danger hover:bg-cream-deep rounded transition-colors"
                   title="Remove feature"
                 >
                   <Trash2 size={16} />
@@ -230,7 +230,7 @@ const ProductEditForm: React.FC<ProductEditFormProps> = ({ product, onSuccess, o
           value={previewImage}
           accept="image/*"
         />
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-ink">
           Leave empty to keep current banner image
         </p>
       </div>

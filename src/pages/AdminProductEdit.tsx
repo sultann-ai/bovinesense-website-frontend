@@ -57,7 +57,7 @@ const AdminProductEdit: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex justify-center items-center">
+      <div className="min-h-screen bg-cream-deep flex justify-center items-center">
         <LoadingSpinner />
       </div>
     );
@@ -65,9 +65,9 @@ const AdminProductEdit: React.FC = () => {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-gray-50 flex justify-center items-center">
+      <div className="min-h-screen bg-cream-deep flex justify-center items-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
+          <h1 className="text-2xl font-bold text-charcoal mb-4">Product Not Found</h1>
           <Button onClick={() => navigate('/admin/dashboard')}>Back to Admin</Button>
         </div>
       </div>
@@ -75,9 +75,9 @@ const AdminProductEdit: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-cream-deep">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-cream shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -90,8 +90,8 @@ const AdminProductEdit: React.FC = () => {
                 Back to Details
               </Button>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Edit Product</h1>
-                <p className="text-gray-600">{product.name}</p>
+                <h1 className="text-2xl font-bold text-charcoal">Edit Product</h1>
+                <p className="text-ink">{product.name}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -113,8 +113,8 @@ const AdminProductEdit: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Form */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Product Information</h2>
+            <div className="bg-cream rounded-card shadow-md p-6">
+              <h2 className="text-xl font-semibold text-charcoal mb-6">Product Information</h2>
               <ProductEditForm
                 product={product}
                 onSuccess={handleFormSuccess}
@@ -125,8 +125,8 @@ const AdminProductEdit: React.FC = () => {
 
           {/* Screenshot Management */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Screenshots</h2>
+            <div className="bg-cream rounded-card shadow-md p-6">
+              <h2 className="text-xl font-semibold text-charcoal mb-6">Screenshots</h2>
               <ScreenshotManager
                 productId={product._id}
                 screenshots={product.screenshots || []}
