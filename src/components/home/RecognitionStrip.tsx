@@ -2,26 +2,29 @@ import { useState } from 'react';
 import { recognitionsService } from '../../services/recognitionsService';
 import { useApiResource } from '../../hooks/useApiResource';
 import { Recognition } from '../../types';
-import { SectionPanel, Skeleton, ErrorState, cx } from '../ui';
+import { SectionPanel, ErrorState, cx } from '../ui';
 import Img from '../ui/Img';
 
 // Each half of the marquee track holds at least this many logos, so the loop
 // never shows a gap even when the API returns only one or two recognitions.
 const MIN_ITEMS_PER_HALF = 8;
 // Seconds per logo: keeps the scroll speed constant regardless of logo count.
-const SECONDS_PER_ITEM = 3;
+const SECONDS_PER_ITEM = 3.5;
+
+// Every logo sits on the same cream tile, in its original colours, so logos with
+// their own backgrounds or dark marks stay legible on the charcoal panel.
+const TILE = 'flex h-20 w-44 items-center justify-center rounded-card bg-cream px-5 py-3 transition-colors duration-150 md:h-24 md:w-52';
 
 const Logo = ({ r, duplicate }: { r: Recognition; duplicate: boolean }) => {
-  // Logos are rendered as a light silhouette on charcoal.
   const logo = (
     <Img
       src={r.image}
       alt={duplicate ? '' : r.name}
-      width={160}
-      height={40}
-      widths={[160, 320, 480]}
-      sizes="160px"
-      className="h-10 w-40 object-contain opacity-80 transition-opacity duration-150 [filter:brightness(0)_invert(1)] group-hover:opacity-100"
+      width={168}
+      height={72}
+      widths={[200, 400, 600]}
+      sizes="(min-width: 768px) 168px, 136px"
+      className="h-full w-full object-contain"
     />
   );
   return r.website ? (
@@ -30,12 +33,12 @@ const Logo = ({ r, duplicate }: { r: Recognition; duplicate: boolean }) => {
       target="_blank"
       rel="noopener noreferrer"
       tabIndex={duplicate ? -1 : undefined}
-      className="group inline-flex rounded-image"
+      className={cx(TILE, 'hover:bg-white')}
     >
       {logo}
     </a>
   ) : (
-    <span className="group inline-flex">{logo}</span>
+    <span className={TILE}>{logo}</span>
   );
 };
 
@@ -60,7 +63,7 @@ const RecognitionStrip = () => {
   return (
     <SectionPanel tone="charcoal" roundedTop aria-labelledby="recognition-strip-title" className="py-12 md:py-14">
       <div className="mb-6 flex items-center justify-between gap-4">
-        <h2 id="recognition-strip-title" className="text-small text-cream opacity-60">
+        <h2 id="recognition-strip-title" className="text-body font-semibold text-cream">
           Backed and recognised by
         </h2>
         {status === 'success' && (
@@ -68,7 +71,7 @@ const RecognitionStrip = () => {
             type="button"
             onClick={() => setPaused((p) => !p)}
             aria-pressed={paused}
-            className="marquee-toggle rounded-pill px-3 py-1 text-small text-cream opacity-70 hover:bg-[rgba(246,241,233,0.08)] hover:opacity-100"
+            className="marquee-toggle inline-flex min-h-11 items-center rounded-pill px-4 text-small text-cream opacity-70 hover:bg-[rgba(246,241,233,0.08)] hover:opacity-100"
           >
             {paused ? 'Play' : 'Pause'}
             <span className="sr-only"> logo scrolling</span>
@@ -77,10 +80,10 @@ const RecognitionStrip = () => {
       </div>
 
       {status === 'loading' && (
-        <div aria-busy="true" className="flex flex-wrap gap-8">
+        <div aria-busy="true" className="flex gap-5 overflow-hidden">
           <span className="sr-only">Loading…</span>
-          {Array.from({ length: 4 }, (_, i) => (
-            <Skeleton key={i} variant="text" lines={1} className="w-28" />
+          {Array.from({ length: 5 }, (_, i) => (
+            <div key={i} aria-hidden="true" className="skeleton skeleton--dark h-20 w-44 shrink-0 rounded-card md:h-24 md:w-52" />
           ))}
         </div>
       )}

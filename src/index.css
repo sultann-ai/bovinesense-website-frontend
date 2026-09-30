@@ -426,7 +426,7 @@ body {
 }
 
 .marquee__track > li {
-  padding-right: 3rem;
+  padding-right: 1.25rem;
 }
 
 .marquee:hover .marquee__track,
