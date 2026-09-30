@@ -14,8 +14,9 @@ const ProductsSection = () => {
       <SectionHeading id="home-products-title" lead="Our" accent="Products" description={DESCRIPTION} />
 
       {status === 'loading' && (
-        <div aria-busy="true" className="grid gap-8 md:grid-cols-2">
+        <div aria-busy="true" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <span className="sr-only">Loading products…</span>
+          <Skeleton variant="card" />
           <Skeleton variant="card" />
           <Skeleton variant="card" />
         </div>
@@ -26,24 +27,25 @@ const ProductsSection = () => {
       {status === 'success' && data && data.length === 0 && <EmptyState message="Products will appear here soon." />}
 
       {status === 'success' && data && data.length > 0 && (
-        <ul className="grid gap-8 md:grid-cols-2">
+        // Compact cards: three across on desktop, two on tablet.
+        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {data.map((product) => (
             <li key={product._id}>
-              <article className="card-lift flex h-full flex-col rounded-card bg-cream-deep p-[26px]">
+              <article className="card-lift flex h-full flex-col rounded-card bg-cream-deep p-4">
                 <div className="overflow-hidden rounded-image">
                   <Img
                     src={product.bannerImage}
                     alt={product.name}
-                    width={1200}
-                    height={750}
-                    sizes="(min-width: 768px) 50vw, 100vw"
+                    width={800}
+                    height={500}
+                    sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
                     className="card-media aspect-[16/10] w-full object-cover"
                   />
                 </div>
-                <h3 className="mt-6 text-h3 text-charcoal">{product.name}</h3>
-                <p className="mt-3 flex-1 text-body">{product.shortDescription}</p>
-                <div className="mt-6">
-                  <Button variant="ghost" to={`/products/${product.slug}`} aria-label={`Learn more about ${product.name}`}>
+                <h3 className="mt-4 text-h3 text-charcoal">{product.name}</h3>
+                <p className="mt-2 line-clamp-3 flex-1 text-small">{product.shortDescription}</p>
+                <div className="mt-4">
+                  <Button variant="ghost" size="compact" to={`/products/${product.slug}`} aria-label={`Learn more about ${product.name}`}>
                     Learn more
                   </Button>
                 </div>
