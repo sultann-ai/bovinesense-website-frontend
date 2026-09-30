@@ -409,6 +409,38 @@ body {
   }
 }
 
+/* --- Logo marquee (RecognitionStrip). Track = two identical halves; moving it
+   by -50% lands exactly on the start of the second half, so the loop is seamless. --- */
+.marquee {
+  overflow: hidden;
+  /* Transparent edge fade: a mask, not a colour. */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  animation: marquee-scroll 30s linear infinite;
+}
+
+.marquee__track > li {
+  padding-right: 3rem;
+}
+
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track,
+.marquee__track--paused {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-seq,
   .hero-seq-arc {
@@ -418,6 +450,24 @@ body {
   .reveal {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  /* Static wrapped row of the original logos only. */
+  .marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .marquee__track {
+    animation: none !important;
+    width: auto;
+    flex-wrap: wrap;
+    row-gap: 1.5rem;
+  }
+
+  .marquee__dup,
+  .marquee-toggle {
+    display: none;
   }
 }
 

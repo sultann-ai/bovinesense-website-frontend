@@ -64,4 +64,6 @@ Any HTML coming from the API must be sanitized before rendering. Never pass raw 
 ### 10. Admin panel: tokens and typography only
 Covers `/admin-login`, `/admin/*`, `src/components/admin/**`, `hooks/admin/**` and the `Admin*` pages. Apply colors and typography only. Do not redesign its layout or change its behaviour.
 
-Shared pieces also render on admin routes: `Navbar`, `Footer`, `CustomBgWrapper`, `src/index.css` and `src/styles/globals.css`. Check admin screens after changing any of them.
+Exception (owner request): admin routes use the same redesigned `SiteHeader` and `SiteFooter` as the public site. The legacy `Navbar`/`Footer` were removed.
+
+Shared pieces also render on admin routes: `SiteHeader`, `SiteFooter`, `CustomBgWrapper` and `src/index.css`. Check admin screens after changing any of them.

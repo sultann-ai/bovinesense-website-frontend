@@ -33,7 +33,7 @@ const mobileLinkClass = ({ isActive }: { isActive: boolean }) =>
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-/** Floating pill header for public routes. NavLink sets aria-current="page" on the active link. */
+/** Floating pill header, used on every route. NavLink sets aria-current="page" on the active link. */
 const SiteHeader = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);

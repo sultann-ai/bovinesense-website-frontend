@@ -4,8 +4,6 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AdminProvider } from './contexts/AdminContext';
-import Navbar from './components/common/Navbar';
-import Footer from './components/common/Footer';
 import SiteHeader from './components/layout/SiteHeader';
 import SiteFooter from './components/layout/SiteFooter';
 import Home from './pages/Home';
@@ -51,25 +49,15 @@ function ScrollToTop() {
   return null;
 }
 
-// Admin routes (/admin-login, /admin/*) keep the original Navbar/Footer layout unchanged.
-// Public routes get the redesigned floating header and footer.
+// Every route uses the redesigned floating header and footer.
 const isAdminPath = (pathname: string) => pathname.startsWith('/admin');
-
-function SiteHeaderSlot() {
-  const { pathname } = useLocation();
-  return isAdminPath(pathname) ? <Navbar /> : <SiteHeader />;
-}
-
-function SiteFooterSlot() {
-  const { pathname } = useLocation();
-  return isAdminPath(pathname) ? <Footer /> : <SiteFooter />;
-}
 
 function MainSlot({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
   // Public pages sit under the floating pill; each hero reserves its own top space.
-  // Public: min-h-screen keeps the footer out of the first screen while content loads (no layout shift).
-  return <main className={isAdminPath(pathname) ? 'pt-16' : 'min-h-screen'}>{children}</main>;
+  // Admin screens have no hero, so they get top padding to clear the pill (16px + 64px + gap).
+  // min-h-screen keeps the footer out of the first screen while content loads (no layout shift).
+  return <main className={isAdminPath(pathname) ? 'pt-24' : 'min-h-screen'}>{children}</main>;
 }
 
 function WorkRedirect() {
@@ -86,7 +74,7 @@ function App() {
             <ScrollToTop />
             <CustomBgWrapper>
               <div className="min-h-screen transition-colors duration-300">
-                <SiteHeaderSlot />
+                <SiteHeader />
                 <MainSlot>
                   <Routes>
                     <Route path="/" element={<Home />} />
@@ -158,7 +146,7 @@ function App() {
                     />
                   </Routes>
                 </MainSlot>
-                <SiteFooterSlot />
+                <SiteFooter />
               </div>
             </CustomBgWrapper>
             <Toaster

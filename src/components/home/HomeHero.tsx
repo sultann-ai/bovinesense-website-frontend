@@ -5,7 +5,7 @@ export interface HomeHeroProps {
   /** Strongest real credential. Owner confirms the text. */
   credential: string;
   /** Hero photo. Leave undefined until the real asset exists (no stock photos). */
-  image?: { src: string; alt: string };
+  image?: { src: string; alt: string; srcSet?: string };
   /**
    * Where the ear tag sits in the photo, as % of the frame. The animated
    * SignalArc radiates from this point. Adjust once the real photo is in.
@@ -97,6 +97,7 @@ const HomeHero = ({ credential, image, earTagPoint = { x: 58, y: 40 } }: HomeHer
               {image ? (
                 <Img
                   src={image.src}
+                  srcSet={image.srcSet}
                   alt={image.alt}
                   width={1200}
                   height={1500}

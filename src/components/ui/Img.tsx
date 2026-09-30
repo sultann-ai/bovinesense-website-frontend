@@ -10,6 +10,8 @@ export interface ImgProps {
   widths?: readonly number[];
   /** `sizes` attribute describing the rendered width. */
   sizes?: string;
+  /** Pre-built srcset for local (non-Cloudinary) images, e.g. resized WebP files in /public. */
+  srcSet?: string;
   /** Above-the-fold hero/LCP image: eager + high priority. Everything else is lazy. */
   priority?: boolean;
   className?: string;
@@ -20,14 +22,14 @@ export interface ImgProps {
  * transformations + srcset, explicit dimensions, lazy loading and async decoding.
  * Non-Cloudinary URLs are rendered as-is.
  */
-const Img = ({ src, alt, width, height, widths = WIDTHS.card, sizes, priority = false, className }: ImgProps) => {
+const Img = ({ src, alt, width, height, widths = WIDTHS.card, sizes, srcSet, priority = false, className }: ImgProps) => {
   const cloud = isCloudinaryUrl(src);
   const largest = widths[widths.length - 1] ?? width;
   return (
     <img
       src={cloud ? cloudinaryUrl(src, largest) : src}
-      srcSet={cloud ? cloudinarySrcSet(src, [...widths]) : undefined}
-      sizes={cloud ? sizes ?? '100vw' : undefined}
+      srcSet={cloud ? cloudinarySrcSet(src, [...widths]) : srcSet}
+      sizes={cloud || srcSet ? sizes ?? '100vw' : undefined}
       alt={alt}
       width={width}
       height={height}
